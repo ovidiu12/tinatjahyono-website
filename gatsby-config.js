@@ -1,8 +1,6 @@
-
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
-
 
 module.exports = {
   siteMetadata: {
@@ -39,6 +37,14 @@ module.exports = {
         repositoryName: `ovidiu12.cdn`,
         accessToken: `${process.env.API_KEY}`,
         linkResolver: ({ node, key, value }) => post => `/${post.uid}`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /images/, // See below to configure properly
+        },
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
