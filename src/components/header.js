@@ -10,43 +10,28 @@ const Root = styled.header`
 
 const Navigation = styled.ul`
   margin: 0;
+  padding-top: 10px;
   list-style-type: none;
   display: flex;
   justify-content: flex-end;
   margin-left: auto;
   width: 50%;
-  a:last-of-type {
-    li {
-      padding-right: 0;
-      &:after {
-        left: ${props => props.theme.utils.em("22px")};
-        transform: translateX(-${props => props.theme.utils.em("11px")});
-      }
-    }
-  }
 `
 const NavigationItem = styled.li`
-  padding: ${props => props.theme.utils.em("30px")}
-    ${props => props.theme.utils.em("22px")};
+  min-width: 90px;
+  height: 60px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 0;
   position: relative;
   text-transform: uppercase;
   font-size: ${props => props.theme.utils.em("14px")};
-
-  &:after {
-    content: "";
-    width: 0;
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    height: 1px;
-    background: ${props => props.theme.colors.black};
-    transition: all 0.2s ease-in;
-  }
+  font-family: "Bitter", sans-serif;
+  transition: all 0.3s ease-in;
   &:hover {
-    &:after {
-      width: 100%;
-    }
+    font-weight: 700;
   }
 `
 
@@ -63,8 +48,8 @@ const Header = ({ siteTitle }) => (
         <Link to="/about">
           <NavigationItem>About</NavigationItem>
         </Link>
-        <Link to="/content">
-          <NavigationItem>Content</NavigationItem>
+        <Link to="/contact">
+          <NavigationItem>Contact</NavigationItem>
         </Link>
       </Navigation>
     </Container>

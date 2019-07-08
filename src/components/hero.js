@@ -4,7 +4,7 @@ import { Container } from "../components/grid"
 import DownArrow from "../images/down-arrow.svg"
 
 const Root = styled.div`
-  height: ${props => props.theme.utils.em("700px")};
+  height: ${props => props.theme.utils.em("780px")};
   background: ${props => props.theme.colors.yellow};
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@ const Root = styled.div`
 `
 
 const Heading = styled.h1`
-  font-size: ${props => props.theme.utils.em("55px")};
+  font-size: 80px;
   text-transform: uppercase;
   color: ${props => props.theme.colors.black};
   margin-bottom: ${props => props.theme.utils.em("3px")};
@@ -24,18 +24,18 @@ const Heading = styled.h1`
 
 const SubHeading = styled.h3`
   color: ${props => props.theme.colors.black};
+  font-weight: 400;
+  font-size: 32px;
 `
 
 const ArrowWrapper = styled.div`
   width: ${props => props.theme.utils.em("40px")};
   height: auto;
   position: absolute;
-  bottom: ${props => props.theme.utils.em("30px")};
+  bottom: ${props => props.theme.utils.em("40px")};
   left: 50%;
   transform: translateX(-50%);
 `
-
-const Arrow = styled.img``
 
 const Hero = () => {
   return (
@@ -44,7 +44,7 @@ const Hero = () => {
         <Heading>Tina Tjahyono</Heading>
         <SubHeading>Graphic Designer</SubHeading>
         <ArrowWrapper>
-          <Arrow src={DownArrow} />
+          <DownArrow />
         </ArrowWrapper>
       </Container>
     </Root>

@@ -7,7 +7,6 @@ const Root = styled.div`
 `
 
 const ContentWrapper = styled.div`
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
   padding: ${props => props.theme.utils.em("20px")};
   display: flex;
   align-items: center;

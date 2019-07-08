@@ -1,11 +1,12 @@
 const colors = {
   //brand
-  yellow: "#FEE884",
-  black: "#070C09",
+  yellow: "#ffe884",
+  black: "#000",
+  purple: "#e1dee9",
 
   //grey colors
   gray: "#555",
-  lightGray: "#9ea5ad",
+  lightGray: "#e1dee9",
   whiteGray: "#f4f5f9",
 }
 

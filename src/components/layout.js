@@ -13,6 +13,7 @@ import theme from "../../theme"
 import Header from "./header"
 import ResetStyles from "./reset"
 import Footer from "./footer"
+import { Helmet } from "react-helmet"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`

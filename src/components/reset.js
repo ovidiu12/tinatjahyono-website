@@ -31,15 +31,14 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     color: ${theme.colors.manataee};
     font-size: ${theme.utils.em(theme.sizes.baseFontSize)};
-    font-family: "georgia", Helvetica, Arial, sans-serif;
+    font-family: 'Bitter', georgia, Helvetica, Arial, sans-serif;
   }
   body, p {
     line-height: ${theme.utils.em(theme.sizes.lineHeight)};
   }
   p {
     margin-bottom: ${theme.utils.em(theme.sizes.lineHeight)};
-    font-family: "georgia", Helvetica, Arial, sans-serif;
-    font-weight: 500 !important;
+    font-family: 'Bitter', georgia, Helvetica, Arial, sans-serif;
   }
   img, embed, object, video {
     max-width: 100%;
@@ -51,6 +50,7 @@ export default createGlobalStyle`
     text-rendering: optimizelegibility;
     font-weight: 600;
     margin: 0;
+    font-family: 'Playfair Display', georgia, sans-serif;
     color: ${theme.colors.blackPearl};
   }
   ul, ol {
@@ -101,6 +101,10 @@ export default createGlobalStyle`
   .featured_image{
     width: 85%;
   }
+  .react-images__positioner{
+    z-index: 999 !important;
+  }
+  
   /* React Modal */
   .ReactModal__Overlay{
     z-index: 9999;
