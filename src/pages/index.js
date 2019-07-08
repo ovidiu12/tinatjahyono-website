@@ -61,7 +61,7 @@ const IndexPage = () => {
             caption: `${node.data.title}`,
             short_description: node.data.short_description,
           }))}
-          itemsPerRow={[2, 2]}
+          itemsPerRow={[1, 2]}
         />
       </Container>
       <Separator />
