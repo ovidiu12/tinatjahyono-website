@@ -55,7 +55,7 @@ const Gallery = ({
     setModalIsOpen(true)
   }
   return (
-    <Box>
+    <Box style={{ marginBottom: "60px" }}>
       {images.map((image, i) => {
         return (
           <Link

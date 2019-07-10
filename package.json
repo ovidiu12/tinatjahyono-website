@@ -24,8 +24,9 @@
     "react-helmet": "^5.2.1",
     "react-images": "^1.0.0",
     "react-photo-gallery": "^8.0.0",
+    "react-slick": "^0.24.0",
     "rebass": "^3.1.1",
-    "styled-buttons": "^0.0.8",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^4.3.2",
     "styled-components-mq": "^0.0.7"
   },

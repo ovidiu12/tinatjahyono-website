@@ -10,7 +10,6 @@ const Root = styled.header`
 
 const Navigation = styled.ul`
   margin: 0;
-  padding-top: 10px;
   list-style-type: none;
   display: flex;
   justify-content: flex-end;
@@ -19,7 +18,7 @@ const Navigation = styled.ul`
 `
 const NavigationItem = styled.li`
   min-width: 90px;
-  height: 60px;
+  height: 75px;
   text-align: center;
   display: flex;
   align-items: center;

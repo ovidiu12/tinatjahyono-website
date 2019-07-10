@@ -11,6 +11,9 @@ export default createGlobalStyle`
     &:after {
       box-sizing: inherit;
     }
+    &:focus{
+      outline: 0;
+    }
   }
   a {
     text-decoration: none;
@@ -104,7 +107,29 @@ export default createGlobalStyle`
   .react-images__positioner{
     z-index: 999 !important;
   }
-  
+
+  /* React Slick */
+  .slick-track{
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .slick-prev:before, .slick-next:before{
+    color: black !important;
+    font-size: 25px !important;
+  }
+  .slick-next, .slick-prev{
+    width: 25px !important;
+    height: 25px !important;
+  }
+  .slick-prev{
+    z-index: 999 !important;
+    left: 0 !important;
+  }
+  .slick-next{
+    right: 0 !important;
+    z-index: 999 !important;
+  }
   /* React Modal */
   .ReactModal__Overlay{
     z-index: 9999;

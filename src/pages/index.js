@@ -7,6 +7,7 @@ import Gallery from "../components/gallery"
 import { useStaticQuery, graphql } from "gatsby"
 import { Container } from "../components/grid"
 import styled from "styled-components"
+import Logos from "../components/logos"
 
 const Separator = styled.div`
   width: 100%;
@@ -63,6 +64,7 @@ const IndexPage = () => {
           }))}
           itemsPerRow={[1, 2]}
         />
+        <Logos />
       </Container>
       <Separator />
     </Layout>
