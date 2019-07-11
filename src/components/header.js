@@ -31,6 +31,7 @@ const NavigationItem = styled.li`
   transition: all 0.3s ease-in;
   &:hover {
     font-weight: 700;
+    cursor: pointer;
   }
 `
 
@@ -41,8 +42,18 @@ const Header = ({ siteTitle }) => (
         <Link to="/">
           <NavigationItem>Home</NavigationItem>
         </Link>
-        <Link to="/work">
-          <NavigationItem>Work</NavigationItem>
+        <Link to="#work">
+          <NavigationItem
+            onClick={() =>
+              window &&
+              window.scrollTo({
+                top: 900,
+                behavior: "smooth",
+              })
+            }
+          >
+            Work
+          </NavigationItem>
         </Link>
         <Link to="/about">
           <NavigationItem>About</NavigationItem>

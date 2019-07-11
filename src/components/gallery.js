@@ -5,6 +5,7 @@ import { Box, Link } from "rebass"
 import { chunk, sum } from "../utils/array"
 import carouselFormatters from "../utils/carouselFormatters"
 import styled from "styled-components"
+import Button from "./button"
 
 const Title = styled.p`
   color: ${props => props.theme.colors.black};
@@ -33,6 +34,25 @@ const Description = styled.p`
   font-family: "Playfair Display", sans-serif;
 `
 
+const ModalFooter = styled.div`
+  margin: 0 auto;
+  margin-top: 20px;
+`
+
+const ViewProject = styled(Button)`
+  border: none;
+  background: ${props => props.theme.colors.yellow};
+  color: black;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px 30px;
+  font-family: "Bitter", sans-serif;
+  &:hover {
+    background: ${props => props.theme.colors.yellow};
+    color: black;
+  }
+`
+
 const Gallery = ({
   images,
 
@@ -49,9 +69,11 @@ const Gallery = ({
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [modalCurrentIndex, setModalCurrentIndex] = useState(0)
   const [displayText, setDisplayText] = useState(null)
+  const [projectId, setProjectId] = useState(null)
   const closeModal = () => setModalIsOpen(false)
-  const openModal = imageIndex => {
+  const openModal = (imageIndex, projectId) => {
     setModalCurrentIndex(imageIndex)
+    setProjectId(projectId)
     setModalIsOpen(true)
   }
   return (
@@ -65,7 +87,7 @@ const Gallery = ({
             onMouseLeave={() => setDisplayText(null)}
             onClick={e => {
               e.preventDefault()
-              openModal(i)
+              openModal(i, image.uid)
             }}
             style={{ position: "relative" }}
           >
@@ -142,6 +164,13 @@ const Gallery = ({
                 formatters={carouselFormatters}
                 components={{
                   FooterCount: () => null,
+                  Footer: () => (
+                    <ModalFooter>
+                      <Link href={`/project/${projectId}`}>
+                        <ViewProject>View Project</ViewProject>
+                      </Link>
+                    </ModalFooter>
+                  ),
                 }}
               />
             </Modal>

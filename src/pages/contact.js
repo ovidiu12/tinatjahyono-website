@@ -7,7 +7,7 @@ import SEO from "../components/seo"
 const Root = styled.div`
   background: ${props => props.theme.colors.yellow};
   padding-top: 150px;
-  height: 100vh;
+  padding-bottom: ${props => (props.isFormDisplayed ? "10px" : "150px")};
 `
 
 const Heading = styled.h1`
@@ -158,7 +158,7 @@ const Contact = () => {
   }
   return (
     <Layout>
-      <Root>
+      <Root isFormDisplayed={displayForm}>
         <SEO title="Contact" />
         <Container>
           <Heading>hello.</Heading>

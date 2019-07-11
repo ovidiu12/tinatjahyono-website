@@ -1,5 +1,4 @@
 import React from "react"
-
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Hero from "../components/hero"
@@ -28,6 +27,7 @@ const IndexPage = () => {
       allPrismicProject {
         edges {
           node {
+            uid
             id
             data {
               title
@@ -54,16 +54,19 @@ const IndexPage = () => {
       <Hero />
       <Separator />
       <Container>
-        <Heading>WORK</Heading>
-        <Gallery
-          images={data.allPrismicProject.edges.map(({ node }) => ({
-            id: node.id,
-            ...node.data.main_image.localFile.childImageSharp.fluid,
-            caption: `${node.data.title}`,
-            short_description: node.data.short_description,
-          }))}
-          itemsPerRow={[1, 2]}
-        />
+        <div id="work">
+          <Heading>WORK</Heading>
+          <Gallery
+            images={data.allPrismicProject.edges.map(({ node }) => ({
+              id: node.id,
+              uid: node.uid,
+              ...node.data.main_image.localFile.childImageSharp.fluid,
+              caption: `${node.data.title}`,
+              short_description: node.data.short_description,
+            }))}
+            itemsPerRow={[1, 2]}
+          />
+        </div>
         <Logos />
       </Container>
       <Separator />
