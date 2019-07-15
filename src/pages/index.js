@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Hero from "../components/hero"
@@ -35,9 +35,25 @@ const IndexPage = () => {
               main_image {
                 localFile {
                   childImageSharp {
-                    fluid {
+                    fluid(quality: 90) {
                       ...GatsbyImageSharpFluid
                       originalImg
+                    }
+                  }
+                }
+              }
+              images {
+                image_description
+                web_link {
+                  url
+                }
+                image {
+                  localFile {
+                    childImageSharp {
+                      fluid(quality: 90) {
+                        ...GatsbyImageSharpFluid
+                        originalImg
+                      }
                     }
                   }
                 }
@@ -48,6 +64,7 @@ const IndexPage = () => {
       }
     }
   `)
+
   return (
     <Layout>
       <SEO title="Home" />
@@ -61,6 +78,7 @@ const IndexPage = () => {
               id: node.id,
               uid: node.uid,
               ...node.data.main_image.localFile.childImageSharp.fluid,
+              images: node.data.images,
               caption: `${node.data.title}`,
               short_description: node.data.short_description,
             }))}

@@ -1,5 +1,5 @@
 import Img from "gatsby-image"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Carousel, { Modal, ModalGateway } from "react-images"
 import { Box, Link } from "rebass"
 import { chunk, sum } from "../utils/array"
@@ -53,11 +53,32 @@ const ViewProject = styled(Button)`
   }
 `
 
-const Gallery = ({
-  images,
+const CustomViewRoot = styled.div`
+  display: flex;
+  justify-content: center;
+`
 
-  itemsPerRow: itemsPerRowByBreakpoints = [1],
-}) => {
+const CustomView = innerProps => {
+  return (
+    <div>
+      <CustomViewRoot>
+        <img src={innerProps.data.source} />
+      </CustomViewRoot>
+    </div>
+  )
+}
+
+const customStyles = {
+  footer: (base, state) => {
+    const opacity = state.interactionIsIdle ? 1 : 1
+    const padding = state.interactionIsIdle ? "40px" : "40px"
+    const transition = "all 0.4s"
+
+    return { ...base, opacity, transition, padding, fontSize: "18px" }
+  },
+}
+
+const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
   const aspectRatios = images.map(image => image.aspectRatio)
   const rowAspectRatioSumsByBreakpoints = itemsPerRowByBreakpoints.map(
     itemsPerRow =>
@@ -69,115 +90,129 @@ const Gallery = ({
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [modalCurrentIndex, setModalCurrentIndex] = useState(0)
   const [displayText, setDisplayText] = useState(null)
-  const [projectId, setProjectId] = useState(null)
+  const [singleProjectImages, setSingleProjectImages] = useState([])
   const closeModal = () => setModalIsOpen(false)
-  const openModal = (imageIndex, projectId) => {
-    setModalCurrentIndex(imageIndex)
-    setProjectId(projectId)
+  const openModal = (index, image) => {
+    setModalCurrentIndex(index)
+    setSingleProjectImages(image.images)
     setModalIsOpen(true)
   }
-  return (
-    <Box style={{ marginBottom: "60px" }}>
-      {images.map((image, i) => {
-        return (
-          <Link
-            key={image.id}
-            href={image.originalImg}
-            onMouseEnter={() => setDisplayText(i)}
-            onMouseLeave={() => setDisplayText(null)}
-            onClick={e => {
-              e.preventDefault()
-              openModal(i, image.uid)
-            }}
-            style={{ position: "relative" }}
-          >
-            <Box
-              as={Img}
-              fluid={image}
-              title={image.caption}
-              width={rowAspectRatioSumsByBreakpoints.map(
-                (rowAspectRatioSums, j) => {
-                  const rowIndex = Math.floor(i / itemsPerRowByBreakpoints[j])
-                  const rowAspectRatioSum = rowAspectRatioSums[rowIndex]
 
-                  return `${(image.aspectRatio / rowAspectRatioSum) * 100}%`
-                }
-              )}
-              css={`
-                display: inline-block;
-                vertical-align: middle;
-                position: relative;
-                :hover {
-                  :before {
-                    opacity: 0.95;
+  return (
+    <>
+      <Box style={{ marginBottom: "60px" }}>
+        {images.map((image, i) => {
+          return (
+            <Link
+              key={image.id}
+              href={image.originalImg}
+              onMouseEnter={() => setDisplayText(i)}
+              onMouseLeave={() => setDisplayText(null)}
+              onClick={e => {
+                e.preventDefault()
+                openModal(i, image)
+              }}
+              style={{ position: "relative" }}
+            >
+              <Box
+                as={Img}
+                fluid={image}
+                title={image.caption}
+                width={rowAspectRatioSumsByBreakpoints.map(
+                  (rowAspectRatioSums, j) => {
+                    const rowIndex = Math.floor(i / itemsPerRowByBreakpoints[j])
+                    const rowAspectRatioSum = rowAspectRatioSums[rowIndex]
+
+                    return `${(image.aspectRatio / rowAspectRatioSum) * 100}%`
+                  }
+                )}
+                css={`
+                  display: inline-block;
+                  vertical-align: middle;
+                  position: relative;
+                  :hover {
+                    :before {
+                      opacity: 0.95;
+                    }
+                    :after {
+                      display: block;
+                    }
                   }
                   :after {
-                    display: block;
+                    content: "";
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 100%;
+                    word-wrap: break-word;
+                    color: #000;
+                    position: absolute;
+                    display: none;
+                    z-index: 9;
                   }
-                }
-                :after {
-                  content: "";
-                  top: 50%;
-                  left: 50%;
-                  transform: translate(-50%, -50%);
-                  width: 100%;
-                  word-wrap: break-word;
-                  color: #000;
-                  position: absolute;
-                  display: none;
-                  z-index: 9;
-                }
-                :before {
-                  background: #e1dee9;
-                  opacity: 0;
-                  content: "";
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  bottom: 0;
-                  right: 0;
-                  transition: opacity 0.3s;
-                  z-index: 9;
-                }
-              `}
-            />
-            {displayText === i && (
-              <TextWrapper>
-                <Title>{image.caption}</Title>
-                <Description>{image.short_description}</Description>
-              </TextWrapper>
-            )}
-          </Link>
-        )
-      })}
-
-      {ModalGateway && (
-        <ModalGateway>
-          {modalIsOpen && (
-            <Modal onClose={closeModal}>
-              <Carousel
-                views={images.map(({ originalImg, caption }) => ({
-                  source: originalImg,
-                  caption,
-                }))}
-                currentIndex={modalCurrentIndex}
-                formatters={carouselFormatters}
-                components={{
-                  FooterCount: () => null,
-                  Footer: () => (
-                    <ModalFooter>
-                      <Link href={`/project/${projectId}`}>
-                        <ViewProject>View Project</ViewProject>
-                      </Link>
-                    </ModalFooter>
-                  ),
-                }}
+                  :before {
+                    background: #e1dee9;
+                    opacity: 0;
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    transition: opacity 0.3s;
+                    z-index: 9;
+                  }
+                `}
               />
-            </Modal>
-          )}
-        </ModalGateway>
-      )}
-    </Box>
+              {displayText === i && (
+                <TextWrapper>
+                  <Title>{image.caption}</Title>
+                  <Description>{image.short_description}</Description>
+                </TextWrapper>
+              )}
+            </Link>
+          )
+        })}
+        {ModalGateway && (
+          <ModalGateway>
+            {modalIsOpen && (
+              <Modal onClose={closeModal}>
+                <Carousel
+                  styles={customStyles}
+                  views={singleProjectImages.map(image => ({
+                    source:
+                      image.image.localFile.childImageSharp.fluid.originalImg,
+                    caption: image.image_description,
+                    link: image.web_link,
+                  }))}
+                  formatters={carouselFormatters}
+                  components={{
+                    View: CustomView,
+                    FooterCaption: props => {
+                      return (
+                        <div>
+                          <span>{props.currentView.caption}</span>
+                          {props.currentView.link !== null && (
+                            <div>
+                              <a
+                                style={{ color: "rgba(255,255,255,0.5)" }}
+                                href={props.currentView.link.url}
+                              >
+                                {props.currentView.link.url}
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      )
+                    },
+                  }}
+                />
+              </Modal>
+            )}
+          </ModalGateway>
+        )}
+      </Box>
+    </>
   )
 }
 

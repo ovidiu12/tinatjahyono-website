@@ -11030,11 +11030,6 @@ style-loader@^0.21.0:
     loader-utils "^1.1.0"
     schema-utils "^0.4.5"
 
-styled-buttons@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/styled-buttons/-/styled-buttons-0.0.8.tgz#7a27822a501fafe8976eba931a190cef8461cc73"
-  integrity sha512-fcG4EKmgvmLiwLAOzReunV6hAmcPS+WIqaJJzvyMDYBG5ZTQa9Q6qA4FbzMiZTjYS4amDHdpLqmdHZqwGEfRig==
-
 styled-components-mq@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/styled-components-mq/-/styled-components-mq-0.0.7.tgz#8435e95b023c6a7cc7d1c9627700bba9050cdeaa"

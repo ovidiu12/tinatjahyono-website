@@ -72,11 +72,11 @@ const Project = props => {
           </div> */}
             <Title>{props.data.prismicProject.data.title}</Title>
             <Separator />
-            <Text
+            {/* <Text
               dangerouslySetInnerHTML={{
                 __html: props.data.prismicProject.data.description.html,
               }}
-            />
+            /> */}
           </RightSide>
         </Root>
       </Container>
@@ -94,9 +94,6 @@ export const pageQuery = graphql`
       uid
       data {
         title
-        description {
-          html
-        }
         main_image {
           localFile {
             id
