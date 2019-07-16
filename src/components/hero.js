@@ -4,7 +4,7 @@ import { Container } from "../components/grid"
 import DownArrow from "../images/down-arrow.svg"
 
 const Root = styled.div`
-  height: ${props => props.theme.utils.em("780px")};
+  height: 705px;
   background: ${props => props.theme.colors.yellow};
   display: flex;
   flex-direction: column;
@@ -32,7 +32,7 @@ const ArrowWrapper = styled.div`
   width: ${props => props.theme.utils.em("40px")};
   height: auto;
   position: absolute;
-  bottom: ${props => props.theme.utils.em("40px")};
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
 `

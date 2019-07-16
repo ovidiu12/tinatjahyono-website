@@ -156,7 +156,14 @@ const About = () => {
             <Label>Email</Label>
             <Email>hello@tinatjahyono</Email>
           </Contact>
-          <Resume>Resume</Resume>
+          <Resume>
+            <a
+              href="https://prismic-io.s3.amazonaws.com/ovidiu12%2Fc3ed3d58-6ab4-4e2d-a0ac-947fd77dd646_ttjahyono_resume_2019.pdf"
+              download
+            >
+              Download resume
+            </a>
+          </Resume>
         </Sidebar>
         <Content>
           <Heading>About</Heading>

@@ -6,8 +6,9 @@ import SEO from "../components/seo"
 
 const Root = styled.div`
   background: ${props => props.theme.colors.yellow};
-  padding-top: 150px;
-  padding-bottom: ${props => (props.isFormDisplayed ? "10px" : "150px")};
+  min-height: 705px;
+  display: flex;
+  align-items: center;
 `
 
 const Heading = styled.h1`
@@ -49,8 +50,8 @@ const Btn = styled.button`
   transition: all 0.2s ease-in;
   display: inline-block;
   &:hover {
-    background: black;
-    color: white;
+    background: white;
+    color: black;
   }
 `
 
@@ -111,6 +112,12 @@ const Error = styled.p`
   margin-bottom: 10px;
 `
 
+const encode = data => {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&")
+}
+
 const Contact = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
@@ -122,19 +129,54 @@ const Contact = () => {
     message: "",
   })
 
-  const handleSubmit = e => {
-    e.preventDefault()
+  const validateForm = () => {
+    let isNameValid = false
+    let isMessageValid = false
+    let isEmailValid = false
     if (name === "") {
       setErrors(prevState => ({ ...prevState, name: "Name is required." }))
+    } else {
+      isNameValid = true
     }
     if (email === "") {
       setErrors(prevState => ({ ...prevState, email: "Email is required." }))
+    } else {
+      isEmailValid = true
     }
-    if (email === "") {
+    if (message === "") {
       setErrors(prevState => ({
         ...prevState,
         message: "Message is required.",
       }))
+    } else {
+      isMessageValid = true
+    }
+
+    if (isEmailValid && isNameValid && isMessageValid) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    let isFormValid = validateForm()
+    if (isFormValid) {
+      const formData = {
+        name,
+        email,
+        message,
+      }
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({ "form-name": "contact", ...formData }),
+      })
+        .then(() => alert("Success!"))
+        .catch(error => console.log(error))
+    } else {
+      console.log("err")
     }
   }
 
@@ -172,7 +214,14 @@ const Contact = () => {
             <GetInTouch onClick={() => setDisplayForm(true)}>
               Get in touch
             </GetInTouch>
-            <DownloadResume>+Download Resume</DownloadResume>
+            <DownloadResume>
+              <a
+                href="https://prismic-io.s3.amazonaws.com/ovidiu12%2Fc3ed3d58-6ab4-4e2d-a0ac-947fd77dd646_ttjahyono_resume_2019.pdf"
+                download
+              >
+                +Download Resume
+              </a>
+            </DownloadResume>
           </ButtonsWrapper>
           {displayForm && (
             <Form

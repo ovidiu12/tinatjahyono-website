@@ -24,7 +24,7 @@ const Heading = styled.h1`
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
     query PhotosQuery {
-      allPrismicProject {
+      allPrismicProject(sort: { fields: [data___order], order: ASC }) {
         edges {
           node {
             uid
@@ -64,7 +64,6 @@ const IndexPage = () => {
       }
     }
   `)
-
   return (
     <Layout>
       <SEO title="Home" />

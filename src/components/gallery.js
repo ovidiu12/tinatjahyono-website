@@ -13,6 +13,8 @@ const Title = styled.p`
   margin-bottom: 0;
   font-size: 18px;
   font-weight: 700;
+  max-width: 80%;
+  margin: -10px auto 5px auto;
   font-family: "Bitter", sans-serif;
 `
 
@@ -32,25 +34,8 @@ const Description = styled.p`
   margin-bottom: 0;
   font-size: 16px;
   font-family: "Playfair Display", sans-serif;
-`
-
-const ModalFooter = styled.div`
+  max-width: 80%;
   margin: 0 auto;
-  margin-top: 20px;
-`
-
-const ViewProject = styled(Button)`
-  border: none;
-  background: ${props => props.theme.colors.yellow};
-  color: black;
-  font-weight: 700;
-  font-size: 18px;
-  padding: 15px 30px;
-  font-family: "Bitter", sans-serif;
-  &:hover {
-    background: ${props => props.theme.colors.yellow};
-    color: black;
-  }
 `
 
 const CustomViewRoot = styled.div`
@@ -118,17 +103,13 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                 as={Img}
                 fluid={image}
                 title={image.caption}
-                width={rowAspectRatioSumsByBreakpoints.map(
-                  (rowAspectRatioSums, j) => {
-                    const rowIndex = Math.floor(i / itemsPerRowByBreakpoints[j])
-                    const rowAspectRatioSum = rowAspectRatioSums[rowIndex]
-
-                    return `${(image.aspectRatio / rowAspectRatioSum) * 100}%`
-                  }
-                )}
+                width={"49%"}
                 css={`
                   display: inline-block;
                   vertical-align: middle;
+                  margin: 0.5%;
+                  max-height: 380px;
+                  height: 380px;
                   position: relative;
                   :hover {
                     :before {
@@ -161,6 +142,10 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                     right: 0;
                     transition: opacity 0.3s;
                     z-index: 9;
+                  }
+                  @media (max-width: 766px) {
+                    width: 100%;
+                    margin: 10px auto;
                   }
                 `}
               />
