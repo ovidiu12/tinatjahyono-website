@@ -101,6 +101,12 @@ export default createGlobalStyle`
       theme.sizes.scale.xxs
     )};
   }
+  .react-images__pager{
+    z-index: 9999;
+  }
+  .gatsby-image-wrapper{
+    margin: 0 !important;
+  }
   .featured_image{
     width: 85%;
   }
@@ -116,11 +122,12 @@ export default createGlobalStyle`
 
   .slick-prev:before, .slick-next:before{
     color: black !important;
+    display: none;
     font-size: 25px !important;
   }
   .slick-next, .slick-prev{
-    width: 25px !important;
-    height: 25px !important;
+    display: flex;
+    justify-content: flex-end;
   }
   .slick-prev{
     z-index: 999 !important;

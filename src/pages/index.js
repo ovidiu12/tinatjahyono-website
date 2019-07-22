@@ -10,12 +10,17 @@ import Logos from "../components/logos"
 
 const Separator = styled.div`
   width: 100%;
-  height: ${props => props.theme.utils.em("80px")};
+  height: 75px;
+`
+
+const Separator2 = styled.div`
+  height: 100px;
+  width: 100%;
 `
 
 const Heading = styled.h1`
   color: ${props => props.theme.colors.black};
-  margin-bottom: 60px;
+  margin-bottom: 54px;
   text-align: center;
   font-size: 32px;
   font-weight: bold;
@@ -30,12 +35,16 @@ const IndexPage = () => {
             uid
             id
             data {
-              title
-              short_description
+              project_title {
+                html
+              }
+              hover_description {
+                html
+              }
               main_image {
                 localFile {
                   childImageSharp {
-                    fluid(quality: 90) {
+                    fluid(quality: 100) {
                       ...GatsbyImageSharpFluid
                       originalImg
                     }
@@ -50,7 +59,7 @@ const IndexPage = () => {
                 image {
                   localFile {
                     childImageSharp {
-                      fluid(quality: 90) {
+                      fluid(quality: 100) {
                         ...GatsbyImageSharpFluid
                         originalImg
                       }
@@ -72,21 +81,22 @@ const IndexPage = () => {
       <Container>
         <div id="work">
           <Heading>WORK</Heading>
-          <Gallery
-            images={data.allPrismicProject.edges.map(({ node }) => ({
-              id: node.id,
-              uid: node.uid,
-              ...node.data.main_image.localFile.childImageSharp.fluid,
-              images: node.data.images,
-              caption: `${node.data.title}`,
-              short_description: node.data.short_description,
-            }))}
-            itemsPerRow={[1, 2]}
-          />
         </div>
-        <Logos />
       </Container>
-      <Separator />
+      <Gallery
+        images={data.allPrismicProject.edges.map(({ node }) => ({
+          id: node.id,
+          uid: node.uid,
+          ...node.data.main_image.localFile.childImageSharp.fluid,
+          images: node.data.images,
+          caption: `${node.data.project_title.html}`,
+          hover_description: node.data.hover_description.html || null,
+        }))}
+        itemsPerRow={[1, 2]}
+      />
+      <Separator2 />
+      <Logos />
+      <Separator2 />
     </Layout>
   )
 }

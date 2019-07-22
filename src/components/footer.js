@@ -1,24 +1,31 @@
 import React from "react"
 import styled from "styled-components"
 import { Container } from "./grid"
-import LinkedInIcon from "../images/linkedin-icon.svg"
-import MailIcon from "../images/mail-icon.svg"
+import LinkedInIcon from "../svgs/linkedin-icon.svg"
+import MailIcon from "../svgs/mail-icon.svg"
 
 const Root = styled.div`
-  background: ${props => props.theme.colors.yellow};
+  background: #fff;
+  border-top: 1px solid #8c8c8c;
+  height: 80px;
+  display: flex;
+  align-items: center;
 `
 
 const ContentWrapper = styled.div`
-  padding: ${props => props.theme.utils.em("20px")};
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  width: 100%;
 `
 
 const Copyright = styled.p`
-  color: ${props => props.theme.colors.mediumGray};
+  color: #6d6e71;
   text-align: center;
-  font-size: ${props => props.theme.utils.em("14px")};
+  font-size: 14px;
   margin-bottom: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 `
 
 const Socials = styled.div`
@@ -28,6 +35,12 @@ const Socials = styled.div`
 
 const Icon = styled.div`
   padding: 0 7px;
+  display: flex;
+  align-items: center;
+  a {
+    display: flex;
+    align-items: center;
+  }
   &:last-of-type {
     padding-right: 0;
   }
@@ -42,10 +55,10 @@ const Icon = styled.div`
 
 const Footer = () => {
   return (
-    <Root>
-      <Container>
+    <Container>
+      <Root>
         <ContentWrapper>
-          <Copyright>©2019 Tina Tjahyono</Copyright>
+          <Copyright>© 2019 Tina Tjahyono</Copyright>
           <Socials>
             <Icon>
               <a href="/contact">
@@ -59,8 +72,8 @@ const Footer = () => {
             </Icon>
           </Socials>
         </ContentWrapper>
-      </Container>
-    </Root>
+      </Root>
+    </Container>
   )
 }
 

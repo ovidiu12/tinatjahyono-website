@@ -5,22 +5,35 @@ import { Box, Link } from "rebass"
 import { chunk, sum } from "../utils/array"
 import carouselFormatters from "../utils/carouselFormatters"
 import styled from "styled-components"
-import Button from "./button"
 
 const Title = styled.p`
   color: ${props => props.theme.colors.black};
   text-align: center;
   margin-bottom: 0;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
   max-width: 80%;
-  margin: -10px auto 5px auto;
+  margin: 0 auto 1px auto;
   font-family: "Bitter", sans-serif;
+  p {
+    margin-bottom: 0;
+  }
+  p {
+    &:last-of-type {
+      margin-top: -7px;
+    }
+  }
+
+  ${props => props.theme.mq({ until: "sm" })`
+    font-size: 20px;
+    max-width: 100%;
+  `}
 `
 
 const TextWrapper = styled.div`
   position: absolute;
-  top: -10px;
+  top: 50%;
+  transform: translateY(-50%);
   left: 0;
   right: 0;
   text-align: center;
@@ -33,9 +46,13 @@ const Description = styled.p`
   color: ${props => props.theme.colors.black};
   margin-bottom: 0;
   font-size: 16px;
+  line-height: 24px;
   font-family: "Playfair Display", sans-serif;
   max-width: 80%;
   margin: 0 auto;
+  p {
+    margin-bottom: 0;
+  }
 `
 
 const CustomViewRoot = styled.div`
@@ -73,19 +90,17 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
   )
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const [modalCurrentIndex, setModalCurrentIndex] = useState(0)
   const [displayText, setDisplayText] = useState(null)
   const [singleProjectImages, setSingleProjectImages] = useState([])
   const closeModal = () => setModalIsOpen(false)
   const openModal = (index, image) => {
-    setModalCurrentIndex(index)
     setSingleProjectImages(image.images)
     setModalIsOpen(true)
   }
 
   return (
     <>
-      <Box style={{ marginBottom: "60px" }}>
+      <Box>
         {images.map((image, i) => {
           return (
             <Link
@@ -93,6 +108,8 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
               href={image.originalImg}
               onMouseEnter={() => setDisplayText(i)}
               onMouseLeave={() => setDisplayText(null)}
+              onTouchStart={() => setDisplayText(i)}
+              onTouchEnd={() => setDisplayText(null)}
               onClick={e => {
                 e.preventDefault()
                 openModal(i, image)
@@ -103,20 +120,19 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                 as={Img}
                 fluid={image}
                 title={image.caption}
-                width={"49%"}
+                width={"50%"}
                 css={`
                   display: inline-block;
                   vertical-align: middle;
-                  margin: 0.5%;
-                  max-height: 380px;
-                  height: 380px;
+                  max-height: 385px;
+                  height: 385px;
                   position: relative;
                   :hover {
                     :before {
                       opacity: 0.95;
                     }
                     :after {
-                      display: block;
+                      display: ${displayText === i ? "block" : "none"};
                     }
                   }
                   :after {
@@ -151,8 +167,16 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
               />
               {displayText === i && (
                 <TextWrapper>
-                  <Title>{image.caption}</Title>
-                  <Description>{image.short_description}</Description>
+                  <Title
+                    dangerouslySetInnerHTML={{
+                      __html: image.caption,
+                    }}
+                  />
+                  <Description
+                    dangerouslySetInnerHTML={{
+                      __html: image.hover_description,
+                    }}
+                  />
                 </TextWrapper>
               )}
             </Link>
