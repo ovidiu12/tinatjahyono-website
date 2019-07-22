@@ -129,10 +129,10 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                   position: relative;
                   :hover {
                     :before {
-                      opacity: 0.95;
+                      opacity: ${displayText === i ? "0.95" : "0"};
                     }
                     :after {
-                      display: ${displayText === i ? "block" : "none"};
+                      display: block;
                     }
                   }
                   :after {

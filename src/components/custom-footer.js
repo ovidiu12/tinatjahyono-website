@@ -23,9 +23,6 @@ const Copyright = styled.p`
   text-align: center;
   font-size: 14px;
   margin-bottom: 0;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
 `
 
 const Socials = styled.div`
@@ -53,28 +50,26 @@ const Icon = styled.div`
   }
 `
 
-const Footer = () => {
+const CustomFooter = () => {
   return (
-    <Container>
-      <Root>
-        <ContentWrapper>
-          <Copyright>© 2019 Tina Tjahyono</Copyright>
-          <Socials>
-            <Icon>
-              <a href="mailto:hello@tinatjahyono.com">
-                <MailIcon />
-              </a>
-            </Icon>
-            <Icon>
-              <a href="https://www.linkedin.com/in/ttjahyono/">
-                <LinkedInIcon />
-              </a>
-            </Icon>
-          </Socials>
-        </ContentWrapper>
-      </Root>
-    </Container>
+    <Root>
+      <ContentWrapper>
+        <Copyright>© 2019 Tina Tjahyono</Copyright>
+        <Socials>
+          <Icon>
+            <a href="mailto:hello@tinatjahyono.com">
+              <MailIcon />
+            </a>
+          </Icon>
+          <Icon>
+            <a href="https://www.linkedin.com/in/ttjahyono/">
+              <LinkedInIcon />
+            </a>
+          </Icon>
+        </Socials>
+      </ContentWrapper>
+    </Root>
   )
 }
 
-export default Footer
+export default CustomFooter

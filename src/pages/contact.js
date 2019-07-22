@@ -211,8 +211,8 @@ const Contact = () => {
             opportunities in the Bay Area, CA.
           </Text>
           <ButtonsWrapper>
-            <GetInTouch onClick={() => setDisplayForm(true)}>
-              Get in touch
+            <GetInTouch>
+              <a href="mailto:hello@tinatjahyono.com">Get in touch</a>
             </GetInTouch>
             <DownloadResume>
               <a

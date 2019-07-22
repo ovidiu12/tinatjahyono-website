@@ -4,14 +4,13 @@ import styled from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 import SEO from "../components/seo"
+import { Container } from "../components/grid"
+import CustomHeader from "../components/custom-header"
+import CustomFooter from "../components/custom-footer"
 
 const Root = styled.div`
   display: flex;
-  align-items: center;
-  height: 100%;
-  background: ${props => props.theme.colors.lightGray};
-
-  ${props => props.theme.mq({ until: "lg" })`
+  ${props => props.theme.mq({ until: "md" })`
     flex-direction: column;
   `}
 `
@@ -22,6 +21,7 @@ const Heading = styled.h1`
   text-align: left;
   font-weight: bold;
   margin: 80px 0;
+  margin-top: 67px;
   font-size: 40px;
   text-transform: uppercase;
 
@@ -32,22 +32,32 @@ const Heading = styled.h1`
 `
 
 const Sidebar = styled.div`
-  width: 50%;
+  background: #e1dee9;
+  width: 181vw;
+  margin-left: calc(-50vw + 50%);
   display: flex;
   justify-content: flex-end;
-  flex-direction: column;
+  align-items: center;
+  ${props => props.theme.mq({ until: "md" })`
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  `}
+`
 
-  ${props => props.theme.mq({ until: "lg" })`
-    width: 90%;
+const SidebarContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-right: 102px;
+  ${props => props.theme.mq({ until: "md" })`
+    padding-right: 0;
   `}
 `
 
 const Content = styled.div`
-  width: 50%;
   padding-left: 100px;
   background: #fff;
   ${props => props.theme.mq({ until: "lg" })`
-    width: 90%;
     padding: 0 80px;
     border-radius: 5px;
     margin-bottom: 50px;
@@ -62,17 +72,17 @@ const Content = styled.div`
 
 const Contact = styled.div`
   text-align: right;
-  padding-right: 100px;
   ${props => props.theme.mq({ until: "lg" })`
     padding-right: 0;
   `}
 `
 
 const Label = styled.p`
-  font-size: 15px;
+  font-size: 20px;
   font-family: "Bitter", sans-serif;
   color: ${props => props.theme.colors.black};
   margin-bottom: 0;
+  text-align: left;
   ${props => props.theme.mq({ until: "lg" })`
     margin-top: 50px;
     text-align: center;
@@ -86,24 +96,28 @@ const Email = styled(Label)`
     margin-top: 0;
     text-align: center;
   `}
+  ${props => props.theme.mq({ until: "md" })`
+    margin-bottom: 0;
+  `}
 `
 
-const Resume = styled.div`
-  text-align: right;
-  padding-right: 100px;
+const Resume = styled(Label)`
   cursor: pointer;
-
-  ${props => props.theme.mq({ until: "lg" })`
-    padding-right: 0;
+  font-weight: 700;
+  a {
+    font-family: "Bitter", sans-serif;
+  }
+  ${props => props.theme.mq({ until: "md" })`
     margin-bottom: 50px;
-    text-align: center;
   `}
 `
 
 const ImgWrapper = styled.div`
-  width: 200px;
-  height: 200px;
-  margin-bottom: 80px;
+  width: 280px;
+  height: 280px;
+  margin-bottom: 77px;
+  margin-left: auto;
+  margin-right: auto;
   ${props => props.theme.mq({ until: "lg" })`
     margin-left: auto;
     margin-right: auto;
@@ -112,11 +126,11 @@ const ImgWrapper = styled.div`
 `
 
 const Text = styled.div`
-  max-width: 70%;
   font-weight: 700;
   font-family: "Bitter", sans-serif;
+  font-size: 20px;
   margin-bottom: 80px;
-  line-height: 1.8;
+  line-height: 32px;
 
   ${props => props.theme.mq({ until: "lg" })`
     max-width: 100%;
@@ -150,38 +164,44 @@ const About = () => {
   return (
     <Layout>
       <SEO title="About" />
-      <Root>
-        <Sidebar>
-          <Contact>
-            <Label>Email</Label>
-            <Email>hello@tinatjahyono</Email>
-          </Contact>
-          <Resume>
-            <a
-              href="https://prismic-io.s3.amazonaws.com/ovidiu12%2Fc3ed3d58-6ab4-4e2d-a0ac-947fd77dd646_ttjahyono_resume_2019.pdf"
-              download
-            >
-              Download resume
-            </a>
-          </Resume>
-        </Sidebar>
-        <Content>
-          <Heading>About</Heading>
-          <ImgWrapper>
-            <Img
-              fluid={
-                data.prismicGeneral.data.about_image.localFile.childImageSharp
-                  .fluid
-              }
+      <Container noPadding>
+        <Root>
+          <Sidebar>
+            <SidebarContent>
+              <Contact>
+                <Label>Email</Label>
+                <Email>hello@tinatjahyono</Email>
+              </Contact>
+              <Resume>
+                <a
+                  href="https://prismic-io.s3.amazonaws.com/ovidiu12%2Fc3ed3d58-6ab4-4e2d-a0ac-947fd77dd646_ttjahyono_resume_2019.pdf"
+                  download
+                >
+                  Resume
+                </a>
+              </Resume>
+            </SidebarContent>
+          </Sidebar>
+          <Content>
+            <CustomHeader style={{ marginRight: "-25px" }} bgColor="white" />
+            <Heading>About</Heading>
+            <ImgWrapper>
+              <Img
+                fluid={
+                  data.prismicGeneral.data.about_image.localFile.childImageSharp
+                    .fluid
+                }
+              />
+            </ImgWrapper>
+            <Text
+              dangerouslySetInnerHTML={{
+                __html: data.prismicGeneral.data.about_text.html,
+              }}
             />
-          </ImgWrapper>
-          <Text
-            dangerouslySetInnerHTML={{
-              __html: data.prismicGeneral.data.about_text.html,
-            }}
-          />
-        </Content>
-      </Root>
+            <CustomFooter />
+          </Content>
+        </Root>
+      </Container>
     </Layout>
   )
 }

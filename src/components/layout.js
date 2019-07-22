@@ -5,17 +5,24 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react"
-import PropTypes from "prop-types"
+import React, { useEffect, useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { ThemeProvider } from "styled-components"
 import theme from "../../theme"
 import Header from "./header"
 import ResetStyles from "./reset"
 import Footer from "./footer"
-import { Helmet } from "react-helmet"
 
-const Layout = ({ children }) => {
+const Layout = props => {
+  const [displayCustom, setDisplayCustom] = useState(false)
+  useEffect(() => {
+    if (window) {
+      let currentUrl = window.location.href.split(window.location.origin)[1]
+      if (currentUrl.includes("about")) {
+        setDisplayCustom(true)
+      }
+    }
+  }, [])
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -31,17 +38,18 @@ const Layout = ({ children }) => {
       <ThemeProvider theme={theme}>
         <div>
           <ResetStyles />
-          <Header siteTitle={data.site.siteMetadata.title} />
-          <main>{children}</main>
-          <Footer />
+          {!displayCustom && (
+            <Header
+              bgColor="#ffe884"
+              siteTitle={data.site.siteMetadata.title}
+            />
+          )}
+          <main>{props.children}</main>
+          {!displayCustom && <Footer />}
         </div>
       </ThemeProvider>
     </>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 }
 
 export default Layout

@@ -12,7 +12,12 @@ const Root = styled.div`
   `}
   ${props => props.theme.mq({ until: "md" })`
     padding: 0 ${props.theme.utils.em("20px")};
+    padding: ${props => props.noPadding && "0"} !important;
   `}
 `
 
-export default ({ style, children }) => <Root style={style}>{children}</Root>
+export default ({ style, children, noPadding }) => (
+  <Root noPadding={noPadding} style={style}>
+    {children}
+  </Root>
+)

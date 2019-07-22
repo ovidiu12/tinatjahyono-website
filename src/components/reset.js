@@ -101,6 +101,9 @@ export default createGlobalStyle`
       theme.sizes.scale.xxs
     )};
   }
+  .react-images__header{
+    opacity: 1;
+  }
   .react-images__pager{
     z-index: 9999;
   }

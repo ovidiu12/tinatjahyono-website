@@ -15,7 +15,7 @@ const Navigation = styled.ul`
   justify-content: flex-end;
   margin-left: auto;
   width: 50%;
-  ${props => props.theme.mq({ until: "sm" })`
+  ${props => props.theme.mq({ until: "md" })`
     width: 100%;
     margin: 0;
     justify-content: space-between;
@@ -45,9 +45,6 @@ const NavigationItem = styled.li`
   }
   ${props => props.theme.mq({ until: "sm" })`
     min-width: auto;
-    a{
-      font-size: 13px;
-    }
   `}
 `
 
