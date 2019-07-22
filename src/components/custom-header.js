@@ -34,6 +34,7 @@ const NavigationItem = styled.li`
   transition: font-weight 0.3s ease-in;
   a {
     letter-spacing: 0.05px;
+    padding-top: ${props => (!props.isActive ? "2px" : "0")};
     font-weight: ${props => (props.isActive ? 700 : "normal")};
     font-size: 14px;
     font-family: "Bitter", sans-serif;

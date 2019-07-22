@@ -53,16 +53,16 @@ const Icon = styled.div`
   }
 `
 
-const Footer = () => {
+const Footer = ({ style }) => {
   return (
     <Container>
-      <Root>
+      <Root style={{ ...style }}>
         <ContentWrapper>
           <Copyright>© 2019 Tina Tjahyono</Copyright>
           <Socials>
             <Icon>
               <a href="mailto:hello@tinatjahyono.com">
-                <MailIcon />
+                <MailIcon style={{ marginTop: "3.7px" }} />
               </a>
             </Icon>
             <Icon>

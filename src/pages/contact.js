@@ -3,6 +3,8 @@ import Layout from "../components/layout"
 import styled from "styled-components"
 import { Container } from "../components/grid"
 import SEO from "../components/seo"
+import Footer from "../components/footer"
+import Header from "../components/header"
 
 const Root = styled.div`
   background: ${props => props.theme.colors.yellow};
@@ -13,7 +15,7 @@ const Root = styled.div`
 
 const Heading = styled.h1`
   color: ${props => props.theme.colors.black};
-  margin-bottom: 0;
+  margin-bottom: 3px;
   text-align: center;
   font-weight: bold;
   font-size: 100px;
@@ -24,6 +26,7 @@ const SubHeading = styled.h3`
   font-size: 30px;
   font-weight: normal;
   text-align: center;
+  margin-bottom: 19px;
 `
 
 const Text = styled.p`
@@ -31,6 +34,7 @@ const Text = styled.p`
   font-weight: normal;
   font-family: "Playfair Display", sans-serif;
   text-align: center;
+  margin-bottom: 44px;
 `
 
 const Form = styled.form`
@@ -58,18 +62,31 @@ const Btn = styled.button`
 const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
+  ${props => props.theme.mq({ until: "sm" })`
+    flex-direction: column;
+    justify-content: center;
+  `}
 `
 
 const GetInTouch = styled(Btn)`
   display: inline-block;
+  width: 165px;
+  height: 55px;
+  ${props => props.theme.mq({ until: "sm" })`
+    margin: 0 auto 10px auto;
+  `}
 `
 const DownloadResume = styled(Btn)`
   display: inline-block;
+  margin-left: 21px;
   border: none;
   &:hover {
     background: none;
     color: black;
   }
+  ${props => props.theme.mq({ until: "sm" })`
+    margin-left: 0;
+  `}
 `
 
 const Input = styled.input`
@@ -203,76 +220,85 @@ const Contact = () => {
       <Root isFormDisplayed={displayForm}>
         <SEO title="Contact" />
         <Container>
-          <Heading>hello.</Heading>
-          <SubHeading>Let's work together.</SubHeading>
-          <Text>
-            I am available for freelance projects and full-time employment
-            <br />
-            opportunities in the Bay Area, CA.
-          </Text>
-          <ButtonsWrapper>
-            <GetInTouch>
-              <a href="mailto:hello@tinatjahyono.com">Get in touch</a>
-            </GetInTouch>
-            <DownloadResume>
-              <a
-                href="https://prismic-io.s3.amazonaws.com/ovidiu12%2Fc3ed3d58-6ab4-4e2d-a0ac-947fd77dd646_ttjahyono_resume_2019.pdf"
-                download
+          <div style={{ marginTop: "-90px" }}>
+            <Heading>hello.</Heading>
+            <SubHeading>Let's work together.</SubHeading>
+            <Text>
+              I am available for freelance projects and full-time employment
+              <br />
+              opportunities in the Bay Area, CA.
+            </Text>
+            <ButtonsWrapper>
+              <GetInTouch>
+                <a href="mailto:hello@tinatjahyono.com">Get in touch</a>
+              </GetInTouch>
+              <DownloadResume>
+                <a
+                  href="https://prismic-io.s3.amazonaws.com/ovidiu12%2Fc3ed3d58-6ab4-4e2d-a0ac-947fd77dd646_ttjahyono_resume_2019.pdf"
+                  download
+                >
+                  +Download Resume
+                </a>
+              </DownloadResume>
+            </ButtonsWrapper>
+            {displayForm && (
+              <Form
+                onSubmit={handleSubmit}
+                name="contact"
+                method="post"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+                method="post"
+                action="#"
               >
-                +Download Resume
-              </a>
-            </DownloadResume>
-          </ButtonsWrapper>
-          {displayForm && (
-            <Form
-              onSubmit={handleSubmit}
-              name="contact"
-              method="post"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
-              method="post"
-              action="#"
-            >
-              <Input type="hidden" name="bot-field" />
-              <Input type="hidden" name="form-name" value="contact" />
-              <FormGroup className="field half first">
-                <label htmlFor="name">Name</label>
-                <Input
-                  onChange={e => handleChange(e, "name")}
-                  value={name}
-                  type="text"
-                  name="name"
-                  id="name"
+                <Input type="hidden" name="bot-field" />
+                <Input type="hidden" name="form-name" value="contact" />
+                <FormGroup className="field half first">
+                  <label htmlFor="name">Name</label>
+                  <Input
+                    onChange={e => handleChange(e, "name")}
+                    value={name}
+                    type="text"
+                    name="name"
+                    id="name"
+                  />
+                  {errors.name !== "" && <Error>{errors.name}</Error>}
+                </FormGroup>
+                <FormGroup className="field half">
+                  <label htmlFor="email">Email</label>
+                  <Input
+                    onChange={e => handleChange(e, "email")}
+                    value={email}
+                    type="email"
+                    name="email"
+                    id="email"
+                  />
+                  {errors.email !== "" && <Error>{errors.email}</Error>}
+                </FormGroup>
+                <FormGroup className="field">
+                  <label htmlFor="message">Message</label>
+                  <textarea
+                    onChange={e => handleChange(e, "message")}
+                    value={message}
+                    name="message"
+                    id="message"
+                    rows="6"
+                  />
+                  {errors.message !== "" && <Error>{errors.message}</Error>}
+                </FormGroup>
+                <Submit
+                  type="submit"
+                  value="Send Message"
+                  className="special"
                 />
-                {errors.name !== "" && <Error>{errors.name}</Error>}
-              </FormGroup>
-              <FormGroup className="field half">
-                <label htmlFor="email">Email</label>
-                <Input
-                  onChange={e => handleChange(e, "email")}
-                  value={email}
-                  type="email"
-                  name="email"
-                  id="email"
-                />
-                {errors.email !== "" && <Error>{errors.email}</Error>}
-              </FormGroup>
-              <FormGroup className="field">
-                <label htmlFor="message">Message</label>
-                <textarea
-                  onChange={e => handleChange(e, "message")}
-                  value={message}
-                  name="message"
-                  id="message"
-                  rows="6"
-                />
-                {errors.message !== "" && <Error>{errors.message}</Error>}
-              </FormGroup>
-              <Submit type="submit" value="Send Message" className="special" />
-            </Form>
-          )}
+              </Form>
+            )}
+          </div>
         </Container>
       </Root>
+      <div style={{ background: "#ffe884" }}>
+        <Footer style={{ background: "#ffe884" }} />
+      </div>
     </Layout>
   )
 }

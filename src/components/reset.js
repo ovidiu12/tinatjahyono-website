@@ -102,10 +102,8 @@ export default createGlobalStyle`
     )};
   }
   .react-images__header{
-    opacity: 1;
-  }
-  .react-images__pager{
-    z-index: 9999;
+    opacity: 1 !important;
+    padding-top: 20px !important;
   }
   .gatsby-image-wrapper{
     margin: 0 !important;

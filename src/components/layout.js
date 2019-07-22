@@ -14,12 +14,17 @@ import ResetStyles from "./reset"
 import Footer from "./footer"
 
 const Layout = props => {
-  const [displayCustom, setDisplayCustom] = useState(false)
+  const [displayCustomFooter, setDisplayCustomFooter] = useState(false)
+  const [displayCustomHeader, setDisplayCustomHeader] = useState(false)
   useEffect(() => {
     if (window) {
       let currentUrl = window.location.href.split(window.location.origin)[1]
       if (currentUrl.includes("about")) {
-        setDisplayCustom(true)
+        setDisplayCustomFooter(true)
+        setDisplayCustomHeader(true)
+      }
+      if (currentUrl.includes("contact")) {
+        setDisplayCustomFooter(true)
       }
     }
   }, [])
@@ -38,14 +43,14 @@ const Layout = props => {
       <ThemeProvider theme={theme}>
         <div>
           <ResetStyles />
-          {!displayCustom && (
+          {!displayCustomHeader && (
             <Header
               bgColor="#ffe884"
               siteTitle={data.site.siteMetadata.title}
             />
           )}
           <main>{props.children}</main>
-          {!displayCustom && <Footer />}
+          {!displayCustomFooter && <Footer />}
         </div>
       </ThemeProvider>
     </>
