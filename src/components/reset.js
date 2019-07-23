@@ -108,6 +108,7 @@ export default createGlobalStyle`
   .gatsby-image-wrapper{
     margin: 0 !important;
   }
+
   .featured_image{
     width: 85%;
   }
@@ -151,6 +152,9 @@ export default createGlobalStyle`
     }
   }
   @media(max-width: 767px){
+    .gatsby-image-wrapper picture img{
+      object-fit: contain;
+    }
     .ReactModal__Overlay{
       padding: 30px !important;
     }

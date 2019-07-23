@@ -39,7 +39,32 @@ const TextWrapper = styled.div`
   text-align: center;
   z-index: 99;
   pointer-events: none;
-  padding: 0 10px;
+  background: rgba(225, 222, 233, 0.95);
+  height: 100.5%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease-in;
+
+  opacity: ${props => (props.show ? "1" : "0")};
+  /* &:hover {
+    &:before {
+      opacity: 1;
+    }
+  }
+  &:before {
+    background: #e1dee9;
+    opacity: 0;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transition: opacity 0.3s;
+    z-index: 9;
+  } */
 `
 
 const Description = styled.p`
@@ -58,6 +83,19 @@ const Description = styled.p`
 const CustomViewRoot = styled.div`
   display: flex;
   justify-content: center;
+`
+
+const Wrapper = styled.div`
+  position: relative;
+`
+
+const GalleryWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  ${props => props.theme.mq({ until: "md" })`
+    grid-template-columns: 1fr;
+  `}
 `
 
 const CustomView = innerProps => {
@@ -100,7 +138,7 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
 
   return (
     <>
-      <Box>
+      <Box as={GalleryWrapper}>
         {images.map((image, i) => {
           return (
             <Link
@@ -114,71 +152,59 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                 e.preventDefault()
                 openModal(i, image)
               }}
-              style={{ position: "relative" }}
+              style={{ position: "relative", display: "block" }}
             >
-              <Box
-                as={Img}
-                fluid={image}
-                title={image.caption}
-                width={"50%"}
-                css={`
-                  display: inline-block;
-                  vertical-align: middle;
-                  max-height: 385px;
-                  height: 385px;
-                  position: relative;
-                  :hover {
-                    :before {
-                      opacity: ${displayText === i ? "0.95" : "0"};
+              <Box as={Wrapper}>
+                <Box
+                  as={Img}
+                  fluid={image}
+                  title={image.caption}
+                  width={"100%"}
+                  css={`
+                    display: inline-block;
+                    vertical-align: middle;
+                    max-height: 385px;
+                    height: 385px;
+                    position: relative;
+                    :hover {
+                      :after {
+                        display: block;
+                      }
                     }
                     :after {
-                      display: block;
+                      content: "";
+                      top: 50%;
+                      left: 50%;
+                      transform: translate(-50%, -50%);
+                      width: 100%;
+                      word-wrap: break-word;
+                      color: #000;
+                      position: absolute;
+                      display: none;
+                      z-index: 9;
                     }
-                  }
-                  :after {
-                    content: "";
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 100%;
-                    word-wrap: break-word;
-                    color: #000;
-                    position: absolute;
-                    display: none;
-                    z-index: 9;
-                  }
-                  :before {
-                    background: #e1dee9;
-                    opacity: 0;
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    bottom: 0;
-                    right: 0;
-                    transition: opacity 0.3s;
-                    z-index: 9;
-                  }
-                  @media (max-width: 766px) {
-                    width: 100%;
-                    margin: 10px auto;
-                  }
-                `}
-              />
-              {displayText === i && (
-                <TextWrapper>
-                  <Title
-                    dangerouslySetInnerHTML={{
-                      __html: image.caption,
-                    }}
-                  />
-                  <Description
-                    dangerouslySetInnerHTML={{
-                      __html: image.hover_description,
-                    }}
-                  />
+
+                    @media (max-width: 766px) {
+                      width: 100%;
+                      margin: 10px auto;
+                    }
+                  `}
+                />
+                <TextWrapper show={displayText === i}>
+                  <div style={{ width: "100%" }}>
+                    <Title
+                      dangerouslySetInnerHTML={{
+                        __html: image.caption,
+                      }}
+                    />
+                    <Description
+                      dangerouslySetInnerHTML={{
+                        __html: image.hover_description,
+                      }}
+                    />
+                  </div>
                 </TextWrapper>
-              )}
+              </Box>
             </Link>
           )
         })}
