@@ -153,7 +153,7 @@ export default createGlobalStyle`
   }
   @media(max-width: 767px){
     .gatsby-image-wrapper picture img{
-      object-fit: contain;
+      object-fit: contain !important;
     }
     .ReactModal__Overlay{
       padding: 30px !important;
