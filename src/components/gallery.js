@@ -6,7 +6,7 @@ import { chunk, sum } from "../utils/array"
 import carouselFormatters from "../utils/carouselFormatters"
 import styled from "styled-components"
 
-const Title = styled.p`
+const Title = styled.div`
   color: ${props => props.theme.colors.black};
   text-align: center;
   margin-bottom: 0;
@@ -67,7 +67,7 @@ const TextWrapper = styled.div`
   } */
 `
 
-const Description = styled.p`
+const Description = styled.div`
   color: ${props => props.theme.colors.black};
   margin-bottom: 0;
   font-size: 16px;
@@ -78,11 +78,6 @@ const Description = styled.p`
   p {
     margin-bottom: 0;
   }
-`
-
-const CustomViewRoot = styled.div`
-  display: flex;
-  justify-content: center;
 `
 
 const Wrapper = styled.div`
@@ -98,13 +93,62 @@ const GalleryWrapper = styled.div`
   `}
 `
 
-const CustomView = innerProps => {
+const CarouselCaption = styled.p`
+  color: white;
+`
+
+const CarouselCaptionWrapper = styled.div`
+  padding: 30px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  p {
+    margin-bottom: 0;
+  }
+`
+
+const FooterCount = ({ currentIndex, totalViews }) => {
   return (
-    <div>
-      <CustomViewRoot>
-        <img src={innerProps.data.source} />
-      </CustomViewRoot>
+    <div
+      style={{
+        position: "absolute",
+        top: "0",
+        left: "0",
+        right: "0",
+        padding: "30px",
+        background:
+          "linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%)",
+      }}
+    >
+      <span style={{ color: "#e1dee9" }}>
+        {currentIndex + 1} of {totalViews}
+      </span>
     </div>
+  )
+}
+
+const FooterCaption = props => {
+  return (
+    <>
+      <FooterCount
+        currentIndex={props.currentIndex}
+        totalViews={props.views.length}
+      />
+      <CarouselCaptionWrapper>
+        <CarouselCaption>{props.currentView.caption}</CarouselCaption>
+        {props.currentView.link !== null && (
+          <div>
+            <a
+              style={{ color: "rgba(255,255,255,0.5)" }}
+              href={props.currentView.link.url}
+            >
+              {props.currentView.link.url}
+            </a>
+          </div>
+        )}
+      </CarouselCaptionWrapper>
+    </>
   )
 }
 
@@ -194,12 +238,12 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                   <div style={{ width: "100%" }}>
                     <Title
                       dangerouslySetInnerHTML={{
-                        __html: image.caption,
+                        __html: `<div>${image.caption}</div>`,
                       }}
                     />
                     <Description
                       dangerouslySetInnerHTML={{
-                        __html: image.hover_description,
+                        __html: `<div>${image.hover_description}</div>`,
                       }}
                     />
                   </div>
@@ -222,23 +266,8 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                   }))}
                   formatters={carouselFormatters}
                   components={{
-                    View: CustomView,
-                    FooterCaption: props => {
-                      return (
-                        <div>
-                          <span>{props.currentView.caption}</span>
-                          {props.currentView.link !== null && (
-                            <div>
-                              <a
-                                style={{ color: "rgba(255,255,255,0.5)" }}
-                                href={props.currentView.link.url}
-                              >
-                                {props.currentView.link.url}
-                              </a>
-                            </div>
-                          )}
-                        </div>
-                      )
+                    Footer: props => {
+                      return <FooterCaption {...props} />
                     },
                   }}
                 />
