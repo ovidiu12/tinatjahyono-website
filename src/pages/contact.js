@@ -53,10 +53,6 @@ const Btn = styled.button`
   cursor: pointer;
   transition: all 0.2s ease-in;
   display: inline-block;
-  &:hover {
-    background: white;
-    color: black;
-  }
 `
 
 const ButtonsWrapper = styled.div`
@@ -72,6 +68,9 @@ const GetInTouch = styled(Btn)`
   display: inline-block;
   width: 165px;
   height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   ${props => props.theme.mq({ until: "sm" })`
     margin: 0 auto 10px auto;
   `}

@@ -5,6 +5,8 @@ import { Box, Link } from "rebass"
 import { chunk, sum } from "../utils/array"
 import carouselFormatters from "../utils/carouselFormatters"
 import styled from "styled-components"
+import LeftArrow from "../images/left-arrow.png"
+import RightArrow from "../images/right-arrow.png"
 
 const Title = styled.div`
   color: ${props => props.theme.colors.black};
@@ -94,7 +96,7 @@ const GalleryWrapper = styled.div`
 `
 
 const CarouselCaption = styled.p`
-  color: white;
+  color: ${props => props.theme.colors.mediumGray};
 `
 
 const CarouselCaptionWrapper = styled.div`
@@ -116,12 +118,10 @@ const FooterCount = ({ currentIndex, totalViews }) => {
         top: "0",
         left: "0",
         right: "0",
-        padding: "30px",
-        background:
-          "linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%)",
+        padding: "25px",
       }}
     >
-      <span style={{ color: "#e1dee9" }}>
+      <span style={{ color: "#6d6e71" }}>
         {currentIndex + 1} of {totalViews}
       </span>
     </div>
@@ -238,7 +238,7 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                   <div style={{ width: "100%" }}>
                     <Title
                       dangerouslySetInnerHTML={{
-                        __html: `<div>${image.caption}</div>`,
+                        __html: `${image.caption}`,
                       }}
                     />
                     <Description
@@ -266,6 +266,44 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                   }))}
                   formatters={carouselFormatters}
                   components={{
+                    NavigationPrev: props => {
+                      return (
+                        <button
+                          style={{
+                            position: "absolute",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            left: "30px",
+                            background: "transparent",
+                            border: "none",
+                            outline: "0",
+                            cursor: "pointer",
+                          }}
+                          onClick={props.innerProps.onClick}
+                        >
+                          <img src={LeftArrow} />
+                        </button>
+                      )
+                    },
+                    NavigationNext: props => {
+                      return (
+                        <button
+                          style={{
+                            position: "absolute",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            right: "30px",
+                            background: "transparent",
+                            border: "none",
+                            outline: "0",
+                            cursor: "pointer",
+                          }}
+                          onClick={props.innerProps.onClick}
+                        >
+                          <img src={RightArrow} />
+                        </button>
+                      )
+                    },
                     Footer: props => {
                       return <FooterCaption {...props} />
                     },
