@@ -8,7 +8,7 @@ import Header from "../components/header"
 
 const Root = styled.div`
   background: ${props => props.theme.colors.yellow};
-  min-height: 705px;
+  height: 82vh;
   display: flex;
   align-items: center;
 `
