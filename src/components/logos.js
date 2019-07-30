@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
@@ -8,6 +8,23 @@ import NextIcon from "../images/right-arrow.png"
 import "slick-carousel/slick/slick-theme.css"
 import Slider from "react-slick"
 import { Container } from "./grid"
+import Modal from "react-modal"
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+  overlay: {
+    background: "rgba(0,0,0,0.8)",
+  },
+}
+
+Modal.setAppElement("#___gatsby")
 
 const Root = styled.div`
   margin: 0 auto;
@@ -25,7 +42,6 @@ const LogoWrapper = styled.div`
 `
 
 const ImgWrapper = styled.div`
-  width: 150px;
   pointer-events: none;
 
   img {
@@ -37,7 +53,11 @@ const ImgWrapper = styled.div`
 const PrevArrow = props => {
   const { className, onClick } = props
   return (
-    <div className={className} onClick={onClick}>
+    <div
+      style={{ display: props.currentSlide == 0 ? "none" : "inherit" }}
+      className={className}
+      onClick={onClick}
+    >
       <img src={PrevIcon} />
     </div>
   )
@@ -46,27 +66,50 @@ const PrevArrow = props => {
 const NextArrow = props => {
   const { className, onClick } = props
   return (
-    <div className={className} onClick={onClick}>
+    <div
+      style={{
+        display:
+          props.currentSlide == props.slideCount - 1 ? "none" : "inherit",
+      }}
+      className={className}
+      onClick={onClick}
+    >
       <img src={NextIcon} />
     </div>
   )
 }
 
 const Logos = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [displayImg, setDisplayImg] = useState(null)
   const data = useStaticQuery(graphql`
     query LogoQuery {
-      allFile(
+      smallQuery: allFile(
         filter: {
           extension: { regex: "/(jpg)|(jpeg)|(png)/" }
           relativeDirectory: { eq: "logos" }
         }
       ) {
-        edges {
-          node {
-            childImageSharp {
-              fluid {
-                ...GatsbyImageSharpFluid
-              }
+        nodes {
+          name
+          childImageSharp {
+            fixed {
+              ...GatsbyImageSharpFixed
+            }
+          }
+        }
+      }
+      largeQuery: allFile(
+        filter: {
+          extension: { regex: "/(jpg)|(jpeg)|(png)/" }
+          relativeDirectory: { eq: "logos/large" }
+        }
+      ) {
+        nodes {
+          name
+          childImageSharp {
+            fluid(quality: 90) {
+              ...GatsbyImageSharpFluid
             }
           }
         }
@@ -74,13 +117,13 @@ const Logos = () => {
     }
   `)
   const settings = {
-    dots: true,
-    infinite: true,
+    dots: false,
+    infinite: false,
     autoplay: false,
     arrows: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: 2,
+    slidesToScroll: 2,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
     responsive: [
@@ -107,22 +150,48 @@ const Logos = () => {
       },
     ],
   }
+
+  const openModal = name => {
+    setDisplayImg(name)
+    setModalIsOpen(!modalIsOpen)
+  }
+
+  const closeModal = () => {
+    setModalIsOpen(false)
+  }
+
   return (
-    <Container>
-      <Root>
-        <Slider {...settings}>
-          {data.allFile.edges.map(node => {
-            return (
-              <LogoWrapper>
-                <ImgWrapper>
-                  <Img fluid={node.node.childImageSharp.fluid} />
-                </ImgWrapper>
-              </LogoWrapper>
-            )
-          })}
-        </Slider>
-      </Root>
-    </Container>
+    <>
+      <Container>
+        <Root>
+          <Slider {...settings}>
+            {data.smallQuery.nodes.map(node => {
+              return (
+                <LogoWrapper onClick={() => openModal(node.name)}>
+                  <ImgWrapper>
+                    <Img fixed={node.childImageSharp.fixed} />
+                  </ImgWrapper>
+                </LogoWrapper>
+              )
+            })}
+          </Slider>
+        </Root>
+      </Container>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+      >
+        {displayImg !== null && (
+          <Img
+            fluid={
+              data.largeQuery.nodes.find(item => displayImg.includes(item.name))
+                .childImageSharp.fluid
+            }
+          />
+        )}
+      </Modal>
+    </>
   )
 }
 
