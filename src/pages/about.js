@@ -21,7 +21,8 @@ const Heading = styled.h1`
   text-align: left;
   font-weight: bold;
   margin: 80px 0;
-  margin-top: 67px;
+  margin-bottom: 72px;
+  margin-top: 55px;
   font-size: 40px;
   text-transform: uppercase;
 
@@ -37,7 +38,6 @@ const Sidebar = styled.div`
   margin-left: calc(-50vw + 50%);
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   ${props => props.theme.mq({ until: "md" })`
     width: 100%;
     margin-left: 0;
@@ -55,7 +55,7 @@ const SidebarContent = styled.div`
 `
 
 const Content = styled.div`
-  padding-left: 100px;
+  padding-left: 63px;
   background: #fff;
   ${props => props.theme.mq({ until: "lg" })`
     padding: 0 80px;
@@ -72,6 +72,7 @@ const Content = styled.div`
 
 const Contact = styled.div`
   text-align: right;
+  margin-top: 615px;
   ${props => props.theme.mq({ until: "lg" })`
     padding-right: 0;
   `}
@@ -90,7 +91,7 @@ const Label = styled.p`
 `
 
 const Email = styled(Label)`
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   font-weight: 700;
   ${props => props.theme.mq({ until: "lg" })`
     margin-top: 0;
@@ -115,9 +116,8 @@ const Resume = styled(Label)`
 const ImgWrapper = styled.div`
   width: 280px;
   height: 280px;
-  margin-bottom: 77px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: 68px;
+  margin-left: 94px;
   ${props => props.theme.mq({ until: "lg" })`
     margin-left: auto;
     margin-right: auto;
@@ -126,7 +126,6 @@ const ImgWrapper = styled.div`
 `
 
 const Text = styled.div`
-  font-weight: 700;
   font-family: "Bitter", sans-serif;
   font-size: 20px;
   margin-bottom: 80px;
@@ -170,7 +169,12 @@ const About = () => {
             <SidebarContent>
               <Contact>
                 <Label>Email</Label>
-                <Email>hello@tinatjahyono</Email>
+                <a
+                  style={{ textDecoration: "none" }}
+                  href="mailto:hello@tinatjahyono.com"
+                >
+                  <Email>hello@tinatjahyono.com</Email>
+                </a>
               </Contact>
               <Resume>
                 <a

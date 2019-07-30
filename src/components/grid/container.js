@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 const Root = styled.div`
-  max-width: 1140px;
+  max-width: 940px;
   width: 100%;
   margin: 0 auto;
   padding: 0
