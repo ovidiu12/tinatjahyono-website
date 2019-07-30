@@ -88,9 +88,9 @@ const IndexPage = () => {
     <Layout>
       <SEO title="Home" />
       <Hero />
-      <Separator />
+      <Separator id="work" />
       <Container>
-        <div id="work">
+        <div>
           <Heading>WORK</Heading>
         </div>
       </Container>

@@ -4,13 +4,15 @@ import styled from "styled-components"
 import { Container } from "../components/grid"
 import SEO from "../components/seo"
 import Footer from "../components/footer"
-import Header from "../components/header"
 
 const Root = styled.div`
   background: ${props => props.theme.colors.yellow};
-  height: 82vh;
+  height: 82.5vh;
   display: flex;
   align-items: center;
+  ${props => props.theme.mq({ until: "sm" })`
+    height: 79.5vh;
+  `}
 `
 
 const Heading = styled.h1`
@@ -20,6 +22,9 @@ const Heading = styled.h1`
   font-weight: bold;
   font-size: 100px;
   font-family: "Bitter", sans-serif;
+  ${props => props.theme.mq({ until: "sm" })`
+    font-size: 80px;
+  `}
 `
 
 const SubHeading = styled.h3`
@@ -27,6 +32,9 @@ const SubHeading = styled.h3`
   font-weight: normal;
   text-align: center;
   margin-bottom: 19px;
+  ${props => props.theme.mq({ until: "sm" })`
+    font-size: 24px;
+  `}
 `
 
 const Text = styled.p`
@@ -35,6 +43,9 @@ const Text = styled.p`
   font-family: "Playfair Display", sans-serif;
   text-align: center;
   margin-bottom: 44px;
+  ${props => props.theme.mq({ until: "sm" })`
+    font-size: 19.2px;
+  `}
 `
 
 const Form = styled.form`
@@ -74,6 +85,10 @@ const GetInTouch = styled(Btn)`
   ${props => props.theme.mq({ until: "sm" })`
     margin: 0 auto 10px auto;
   `}
+  transition: all 0.05s ease-in;
+  &:hover {
+    border-width: 3px;
+  }
 `
 const DownloadResume = styled(Btn)`
   display: inline-block;

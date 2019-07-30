@@ -139,9 +139,26 @@ export default createGlobalStyle`
     right: 0 !important;
     z-index: 999 !important;
   }
+  .span-2{
+    grid-column: span 2;
+  }
   /* React Modal */
   .ReactModal__Overlay{
     z-index: 9999;
+  }
+  .react-images__blanket{
+    background-color: white !important;
+  }
+  
+  .react-images__header{
+    background: transparent !important;
+  }
+  .react-images__header_button--close, .react-images__header_button--fullscreen{
+    svg{
+      path{
+        color: #6d6e71 !important;
+      }
+    }
   }
   @media(min-width: 767px){
     .ReactModal__Content{
@@ -152,6 +169,12 @@ export default createGlobalStyle`
     }
   }
   @media(max-width: 767px){
+    .span-2{
+      grid-column: inherit;
+    }
+    .span-2 .gatsby-image-wrapper{
+      height: 200px !important;
+    }
     .gatsby-image-wrapper picture img{
       object-fit: contain !important;
     }

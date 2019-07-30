@@ -57,6 +57,11 @@ const ImgWrapper = styled.div`
     filter: grayscale(100%);
     transition: all 0.2s ease-in;
   }
+  ${props => props.theme.mq({ until: "md" })`
+    & div:first-child {
+      width: 150px !important;
+    }
+  `}
 `
 
 const PrevArrow = props => {
@@ -94,6 +99,7 @@ const Logos = () => {
   const data = useStaticQuery(graphql`
     query LogoQuery {
       smallQuery: allFile(
+        sort: { fields: name, order: ASC }
         filter: {
           extension: { regex: "/(jpg)|(jpeg)|(png)/" }
           relativeDirectory: { eq: "logos" }
@@ -125,6 +131,7 @@ const Logos = () => {
       }
     }
   `)
+  console.log(data)
   const settings = {
     dots: false,
     infinite: false,

@@ -52,6 +52,9 @@ const SidebarContent = styled.div`
   ${props => props.theme.mq({ until: "md" })`
     padding-right: 0;
   `}
+  ${props => props.theme.mq({ until: "sm" })`
+    display: none;
+  `}
 `
 
 const Content = styled.div`
@@ -75,6 +78,12 @@ const Contact = styled.div`
   margin-top: 615px;
   ${props => props.theme.mq({ until: "lg" })`
     padding-right: 0;
+  `}
+  ${props => props.theme.mq({ until: "md" })`
+    margin-top: 0;
+  `}
+  ${props => props.theme.mq({ until: "sm" })`
+    display: none;
   `}
 `
 
@@ -133,7 +142,6 @@ const Text = styled.div`
 
   ${props => props.theme.mq({ until: "lg" })`
     max-width: 100%;
-    text-align: center;
   `}
 `
 

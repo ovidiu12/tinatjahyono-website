@@ -181,14 +181,15 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                 e.preventDefault()
                 openModal(i, image)
               }}
+              className={
+                image.uid ===
+                "blackhawk-network-card-packaging-and-prepaid-cards"
+                  ? "span-2"
+                  : "item"
+              }
               style={{
                 position: "relative",
                 display: "block",
-                gridColumn:
-                  image.uid ===
-                  "blackhawk-network-card-packaging-and-prepaid-cards"
-                    ? "span 2"
-                    : "auto",
               }}
             >
               <Box as={Wrapper}>

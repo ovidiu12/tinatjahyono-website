@@ -4,7 +4,7 @@ import { Container } from "../components/grid"
 import DownArrow from "../images/down-arrow.png"
 
 const Root = styled.div`
-  height: 90vh;
+  height: 91vh;
   background: ${props => props.theme.colors.yellow};
   display: flex;
   flex-direction: column;

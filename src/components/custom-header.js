@@ -6,6 +6,11 @@ import { Container } from "./grid"
 
 const Root = styled.header`
   background: ${props => props.bgColor};
+  ${props => props.theme.mq({ until: "sm" })`
+    margin-right: 0 !important;
+    width: 100vw;
+    margin-left: -40px;
+  `}
 `
 
 const Navigation = styled.ul`
