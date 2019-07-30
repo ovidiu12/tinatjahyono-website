@@ -1,4 +1,4 @@
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import PropTypes from "prop-types"
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
@@ -34,7 +34,7 @@ const NavigationItem = styled.li`
   transition: font-weight 0.3s ease-in;
   a {
     letter-spacing: 0.05px;
-    padding-top: ${props => (!props.isActive ? "2px" : "0")};
+    padding-top: ${props => (!props.isActive ? "2px" : "-1px")};
     font-weight: ${props => (props.isActive ? 700 : "normal")};
     font-size: 14px;
     font-family: "Bitter", sans-serif;
@@ -42,6 +42,7 @@ const NavigationItem = styled.li`
       font-weight: 700;
       cursor: pointer;
       letter-spacing: 0;
+      margin-top: ${props => (!props.isActive ? "-1px" : "0")};
     }
   }
   ${props => props.theme.mq({ until: "sm" })`
@@ -73,11 +74,17 @@ const Header = props => {
       }
     }
   }, [])
+
   return (
     <Root style={{ ...props.style }} bgColor={props.bgColor}>
       <Container>
         <Navigation>
-          <NavigationItem isActive={activeNav.home}>
+          <NavigationItem
+            onClick={() =>
+              setActiveNav({ ...activeNav, work: false, home: true })
+            }
+            isActive={activeNav.home}
+          >
             <Link title="home" to="/">
               Home
             </Link>
@@ -89,16 +96,14 @@ const Header = props => {
               if (window) {
                 activeNav.home
                   ? window.scrollTo({
-                      top: 900,
+                      top: 700,
                       behavior: "smooth",
                     })
-                  : window.location.replace("/")
+                  : navigate("/#work")
               }
             }}
           >
-            <a title="work" href="#work">
-              Work
-            </a>
+            <a title="work">Work</a>
           </NavigationItem>
 
           <NavigationItem isActive={activeNav.about}>

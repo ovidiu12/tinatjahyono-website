@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Hero from "../components/hero"
@@ -52,7 +52,9 @@ const IndexPage = () => {
                 }
               }
               images {
-                image_description
+                img_description {
+                  html
+                }
                 web_link {
                   url
                 }
@@ -73,6 +75,15 @@ const IndexPage = () => {
       }
     }
   `)
+  useEffect(() => {
+    // direct browser to top right away
+    if (window.location.hash) {
+      window.scrollTo({
+        top: 900,
+        behavior: "smooth",
+      })
+    }
+  }, [])
   return (
     <Layout>
       <SEO title="Home" />

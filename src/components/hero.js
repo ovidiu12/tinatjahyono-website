@@ -4,7 +4,7 @@ import { Container } from "../components/grid"
 import DownArrow from "../images/down-arrow.png"
 
 const Root = styled.div`
-  height: 618px;
+  height: 90vh;
   background: ${props => props.theme.colors.yellow};
   display: flex;
   flex-direction: column;
@@ -44,6 +44,7 @@ const ArrowWrapper = styled.div`
   bottom: 33px;
   left: 50%;
   transform: translateX(-50%);
+  cursor: pointer;
 `
 
 const Hero = () => {
@@ -54,7 +55,9 @@ const Hero = () => {
           <Heading>Tina Tjahyono</Heading>
           <SubHeading>Graphic Designer</SubHeading>
         </TextWrapper>
-        <ArrowWrapper>
+        <ArrowWrapper
+          onClick={() => window.scrollTo({ top: 700, behavior: "smooth" })}
+        >
           <img src={DownArrow} alt="Down arrow" />
         </ArrowWrapper>
       </Container>

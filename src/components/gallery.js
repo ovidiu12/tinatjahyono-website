@@ -136,14 +136,16 @@ const FooterCaption = props => {
         totalViews={props.views.length}
       />
       <CarouselCaptionWrapper>
-        <CarouselCaption>{props.currentView.caption}</CarouselCaption>
+        <CarouselCaption
+          dangerouslySetInnerHTML={{ __html: props.currentView.caption.html }}
+        />
         {props.currentView.link !== null && (
           <div>
             <a
               style={{ color: "rgba(255,255,255,0.5)" }}
               href={props.currentView.link.url}
             >
-              {props.currentView.link.url}
+              {props.currentView.link.url.replace(/(^\w+:|^)\/\//, "")}
             </a>
           </div>
         )}
@@ -196,19 +198,32 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                 e.preventDefault()
                 openModal(i, image)
               }}
-              style={{ position: "relative", display: "block" }}
+              style={{
+                position: "relative",
+                display: "block",
+                gridColumn:
+                  image.uid ===
+                  "blackhawk-network-card-packaging-and-prepaid-cards"
+                    ? "span 2"
+                    : "auto",
+              }}
             >
               <Box as={Wrapper}>
                 <Box
                   as={Img}
                   fluid={image}
-                  title={image.caption}
                   width={"100%"}
                   css={`
                     display: inline-block;
                     vertical-align: middle;
-                    max-height: 385px;
-                    height: 385px;
+                    max-height: ${image.uid ===
+                    "blackhawk-network-card-packaging-and-prepaid-cards"
+                      ? "500px"
+                      : "385px"};
+                    height: ${image.uid ===
+                    "blackhawk-network-card-packaging-and-prepaid-cards"
+                      ? "500px"
+                      : "385px"};
                     position: relative;
                     :hover {
                       :after {
@@ -261,7 +276,7 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                   views={singleProjectImages.map(image => ({
                     source:
                       image.image.localFile.childImageSharp.fluid.originalImg,
-                    caption: image.image_description,
+                    caption: image.img_description,
                     link: image.web_link,
                   }))}
                   formatters={carouselFormatters}
