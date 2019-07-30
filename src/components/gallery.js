@@ -50,23 +50,6 @@ const TextWrapper = styled.div`
   transition: opacity 0.2s ease-in;
 
   opacity: ${props => (props.show ? "1" : "0")};
-  /* &:hover {
-    &:before {
-      opacity: 1;
-    }
-  }
-  &:before {
-    background: #e1dee9;
-    opacity: 0;
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    transition: opacity 0.3s;
-    z-index: 9;
-  } */
 `
 
 const Description = styled.div`
@@ -246,6 +229,7 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                     @media (max-width: 766px) {
                       width: 100%;
                       margin: 10px auto;
+                      height: auto !important;
                     }
                   `}
                 />

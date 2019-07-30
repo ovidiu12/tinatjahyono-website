@@ -26,6 +26,15 @@ const customStyles = {
 
 Modal.setAppElement("#___gatsby")
 
+const ModalImgWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  & > :first-child {
+    width: 100%;
+    height: 100%;
+  }
+`
+
 const Root = styled.div`
   margin: 0 auto;
 `
@@ -183,12 +192,15 @@ const Logos = () => {
         style={customStyles}
       >
         {displayImg !== null && (
-          <Img
-            fluid={
-              data.largeQuery.nodes.find(item => displayImg.includes(item.name))
-                .childImageSharp.fluid
-            }
-          />
+          <ModalImgWrapper>
+            <Img
+              fluid={
+                data.largeQuery.nodes.find(item =>
+                  displayImg.includes(item.name)
+                ).childImageSharp.fluid
+              }
+            />
+          </ModalImgWrapper>
         )}
       </Modal>
     </>
