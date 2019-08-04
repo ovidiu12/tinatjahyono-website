@@ -61,6 +61,9 @@ const IndexPage = () => {
                 image {
                   localFile {
                     childImageSharp {
+                      original {
+                        height
+                      }
                       fluid(quality: 100) {
                         ...GatsbyImageSharpFluid
                         originalImg
@@ -75,15 +78,6 @@ const IndexPage = () => {
       }
     }
   `)
-  useEffect(() => {
-    // direct browser to top right away
-    if (window.location.hash) {
-      window.scrollTo({
-        top: 900,
-        behavior: "smooth",
-      })
-    }
-  }, [])
   return (
     <Layout>
       <SEO title="Home" />

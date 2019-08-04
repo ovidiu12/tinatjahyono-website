@@ -6,6 +6,8 @@ import { Container } from "./grid"
 
 const Root = styled.header`
   background: ${props => props.bgColor};
+  position: relative;
+  z-index: 99;
 `
 
 const Navigation = styled.ul`
@@ -94,14 +96,7 @@ const Header = props => {
             isActive={activeNav.work}
             onClick={() => {
               setActiveNav({ ...activeNav, home: false, work: true })
-              if (window) {
-                activeNav.home
-                  ? window.scrollTo({
-                      top: 600,
-                      behavior: "smooth",
-                    })
-                  : navigate("/#work")
-              }
+              navigate("/#work")
             }}
           >
             <a title="work">Work</a>

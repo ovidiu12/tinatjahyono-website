@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import styled from "styled-components"
 import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
@@ -20,7 +20,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
   },
   overlay: {
-    background: "rgba(0,0,0,0.8)",
+    background: "#fff",
   },
 }
 
@@ -48,6 +48,10 @@ const LogoWrapper = styled.div`
       filter: grayscale(0%);
     }
   }
+  ${props => props.theme.mq({ until: "sm" })`
+    max-width: 200px;
+    margin: 0 auto;
+  `}
 `
 
 const ImgWrapper = styled.div`
@@ -57,11 +61,24 @@ const ImgWrapper = styled.div`
     filter: grayscale(100%);
     transition: all 0.2s ease-in;
   }
-  ${props => props.theme.mq({ until: "md" })`
-    & div:first-child {
-      width: 150px !important;
+  ${props => props.theme.mq({ until: "sm" })`
+    width: 100%;
+    height: 100%;
+    .gatsby-image-wrapper {
+      width: 100% !important;
     }
   `}
+`
+
+const CloseBtn = styled.button`
+  position: absolute;
+  right: 0;
+  top: 0;
+`
+
+const RootModal = styled.div`
+  width: 100%;
+  height: 100%;
 `
 
 const PrevArrow = props => {
@@ -96,6 +113,7 @@ const NextArrow = props => {
 const Logos = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [displayImg, setDisplayImg] = useState(null)
+  const overlayRef = useRef(null)
   const data = useStaticQuery(graphql`
     query LogoQuery {
       smallQuery: allFile(
@@ -117,7 +135,7 @@ const Logos = () => {
       largeQuery: allFile(
         filter: {
           extension: { regex: "/(jpg)|(jpeg)|(png)/" }
-          relativeDirectory: { eq: "logos/large" }
+          relativeDirectory: { eq: "logos-large" }
         }
       ) {
         nodes {
@@ -131,7 +149,6 @@ const Logos = () => {
       }
     }
   `)
-  console.log(data)
   const settings = {
     dots: false,
     infinite: false,
@@ -146,8 +163,8 @@ const Logos = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
       {
@@ -171,11 +188,9 @@ const Logos = () => {
     setDisplayImg(name)
     setModalIsOpen(!modalIsOpen)
   }
-
-  const closeModal = () => {
+  const closeModal = node => {
     setModalIsOpen(false)
   }
-
   return (
     <>
       <Container>
@@ -197,18 +212,39 @@ const Logos = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
+        overlayRef={node => {
+          if (node !== null) {
+            let closeBtn = document.createElement("button")
+            closeBtn.className = "logo-close-btn"
+            closeBtn.innerHTML = `<svg role="presentation" viewBox="0 0 24 24" class="css-9s8aw7">
+          <path d="M18.984 6.422l-5.578 5.578 5.578 5.578-1.406 1.406-5.578-5.578-5.578 5.578-1.406-1.406 5.578-5.578-5.578-5.578 1.406-1.406 5.578 5.578 5.578-5.578z"></path>
+        </svg>`
+            closeBtn.onclick = function() {
+              return closeModal(node)
+            }
+            return node.insertAdjacentElement("beforeend", closeBtn)
+          }
+        }}
       >
-        {displayImg !== null && (
-          <ModalImgWrapper>
-            <Img
-              fluid={
-                data.largeQuery.nodes.find(item =>
-                  displayImg.includes(item.name)
-                ).childImageSharp.fluid
-              }
-            />
-          </ModalImgWrapper>
-        )}
+        {/* <CloseBtn onClick={closeModal}>
+          <svg role="presentation" viewBox="0 0 24 24" class="css-9s8aw7">
+            <path d="M18.984 6.422l-5.578 5.578 5.578 5.578-1.406 1.406-5.578-5.578-5.578 5.578-1.406-1.406 5.578-5.578-5.578-5.578 1.406-1.406 5.578 5.578 5.578-5.578z"></path>
+          </svg>
+        </CloseBtn> */}
+        <RootModal>
+          {displayImg !== null && data.largeQuery && (
+            <ModalImgWrapper>
+              <Img
+                fluid={
+                  data.largeQuery &&
+                  data.largeQuery.nodes.find(item =>
+                    displayImg.includes(item.name)
+                  ).childImageSharp.fluid
+                }
+              />
+            </ModalImgWrapper>
+          )}
+        </RootModal>
       </Modal>
     </>
   )

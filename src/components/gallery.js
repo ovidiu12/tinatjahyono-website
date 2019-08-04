@@ -7,6 +7,7 @@ import carouselFormatters from "../utils/carouselFormatters"
 import styled from "styled-components"
 import LeftArrow from "../images/left-arrow.png"
 import RightArrow from "../images/right-arrow.png"
+import { relative } from "upath"
 
 const Title = styled.div`
   color: ${props => props.theme.colors.black};
@@ -55,7 +56,7 @@ const TextWrapper = styled.div`
 const Description = styled.div`
   color: ${props => props.theme.colors.black};
   margin-bottom: 0;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
   font-family: "Playfair Display", sans-serif;
   max-width: 80%;
@@ -72,7 +73,7 @@ const Wrapper = styled.div`
 const GalleryWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-
+  overflow: hidden;
   ${props => props.theme.mq({ until: "md" })`
     grid-template-columns: 1fr;
   `}
@@ -80,28 +81,39 @@ const GalleryWrapper = styled.div`
 
 const CarouselCaption = styled.p`
   color: ${props => props.theme.colors.mediumGray};
+  line-height: 22px;
+  font-size: 14px;
 `
 
 const CarouselCaptionWrapper = styled.div`
   padding: 30px;
-  position: absolute;
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 18px;
   bottom: 0;
   left: 0;
   right: 0;
+  padding: 0;
   p {
     margin-bottom: 0;
   }
+  ${props => props.theme.mq({ until: "md" })`
+    padding: 0 25px;
+    width: auto;
+  `}
 `
 
 const FooterCount = ({ currentIndex, totalViews }) => {
   return (
     <div
       style={{
-        position: "absolute",
+        fontSize: "14px",
         top: "0",
-        left: "0",
-        right: "0",
         padding: "25px",
+        paddingTop: "0px",
+        zIndex: "999",
+        position: "absolute",
       }}
     >
       <span style={{ color: "#6d6e71" }}>
@@ -114,10 +126,6 @@ const FooterCount = ({ currentIndex, totalViews }) => {
 const FooterCaption = props => {
   return (
     <>
-      <FooterCount
-        currentIndex={props.currentIndex}
-        totalViews={props.views.length}
-      />
       <CarouselCaptionWrapper>
         <CarouselCaption
           dangerouslySetInnerHTML={{ __html: props.currentView.caption.html }}
@@ -125,7 +133,7 @@ const FooterCaption = props => {
         {props.currentView.link !== null && (
           <div>
             <a
-              style={{ color: "rgba(255,255,255,0.5)" }}
+              style={{ color: "#6d6e71", fontSize: "14px" }}
               href={props.currentView.link.url}
             >
               {props.currentView.link.url.replace(/(^\w+:|^)\/\//, "")}
@@ -137,6 +145,39 @@ const FooterCaption = props => {
   )
 }
 
+const ViewImgWrapper = styled.div`
+  max-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${props =>
+    props.imgHeight > 700 &&
+    `
+    overflow-y: scroll;
+  `}
+  img {
+    height: 100%;
+  }
+
+  ${props => props.theme.mq({ until: "lg" })`
+    width: 100%;
+    img{
+      width: 100%;
+    }
+  `}
+  ${props => props.theme.mq({ until: "sm" })`
+    max-height: 400px;
+    margin-top: 15%;
+    width: 100%;
+    img{
+      width: 100%;
+    }
+  `}
+  ${props => props.theme.mq({ from: "sm", until: "md" })`
+    margin-top: 7.3%;
+  `}
+`
+
 const customStyles = {
   footer: (base, state) => {
     const opacity = state.interactionIsIdle ? 1 : 1
@@ -144,6 +185,15 @@ const customStyles = {
     const transition = "all 0.4s"
 
     return { ...base, opacity, transition, padding, fontSize: "18px" }
+  },
+  header: (base, state) => {
+    const transform = state.interactionIsIdle
+      ? "translateY(0)"
+      : "translateY(0)"
+    return {
+      ...base,
+      transform,
+    }
   },
 }
 
@@ -259,13 +309,28 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                 <Carousel
                   styles={customStyles}
                   views={singleProjectImages.map(image => ({
-                    source:
-                      image.image.localFile.childImageSharp.fluid.originalImg,
+                    source: image.image.localFile.childImageSharp.fluid.src,
+                    height:
+                      image.image.localFile.childImageSharp.original.height,
                     caption: image.img_description,
                     link: image.web_link,
                   }))}
                   formatters={carouselFormatters}
                   components={{
+                    View: props => {
+                      return (
+                        <>
+                          <FooterCount
+                            currentIndex={props.currentIndex}
+                            totalViews={props.views.length}
+                          />
+                          <ViewImgWrapper imgHeight={props.data.height}>
+                            <img src={props.data.source} />
+                          </ViewImgWrapper>
+                          <FooterCaption {...props} />
+                        </>
+                      )
+                    },
                     NavigationPrev: props => {
                       return (
                         <button
@@ -305,7 +370,7 @@ const Gallery = ({ images, itemsPerRow: itemsPerRowByBreakpoints = [1] }) => {
                       )
                     },
                     Footer: props => {
-                      return <FooterCaption {...props} />
+                      return <></>
                     },
                   }}
                 />

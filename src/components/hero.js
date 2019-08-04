@@ -4,7 +4,7 @@ import { Container } from "../components/grid"
 import DownArrow from "../images/down-arrow.png"
 
 const Root = styled.div`
-  height: 91vh;
+  height: 90vh;
   background: ${props => props.theme.colors.yellow};
   display: flex;
   flex-direction: column;
@@ -12,6 +12,10 @@ const Root = styled.div`
   justify-content: center;
   text-align: center;
   position: relative;
+
+  @media (max-width: 400px) {
+    height: 87vh;
+  }
 `
 
 const TextWrapper = styled.div``

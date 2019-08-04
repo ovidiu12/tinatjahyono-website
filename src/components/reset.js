@@ -103,7 +103,10 @@ export default createGlobalStyle`
   }
   .react-images__header{
     opacity: 1 !important;
-    padding-top: 20px !important;
+    padding-top: 0px !important;
+    svg{
+      margin-top: -24px;
+    }
   }
   .gatsby-image-wrapper{
     margin: 0 !important;
@@ -120,6 +123,11 @@ export default createGlobalStyle`
   .slick-track{
     display: flex !important;
     align-items: center !important;
+  }
+
+  .slick-prev, .slick-next{
+    width: auto !important;
+    height: auto !important;
   }
 
   .slick-prev:before, .slick-next:before{
@@ -141,6 +149,35 @@ export default createGlobalStyle`
   }
   .span-2{
     grid-column: span 2;
+    .gatsby-image-wrapper{
+      height: 385px;
+      img{
+        object-fit: contain !important;
+      }
+    }
+  }
+  .logo-close-btn{
+    right: 20px;
+    top: 30px;
+    background: transparent;
+    border: none;
+    outline: 0;
+    position: absolute;
+    cursor: pointer;
+    svg{
+      width: 32px;
+      height: 32px;
+      path{
+        color: #6d6e71;
+      }
+    }
+  }
+  .ReactModal__Body--open{
+    overflow: hidden;
+  }
+  .react-images__positioner{
+    display: block !important;
+    margin-top: 30px;
   }
   /* React Modal */
   .ReactModal__Overlay{
@@ -148,6 +185,7 @@ export default createGlobalStyle`
   }
   .react-images__blanket{
     background-color: white !important;
+    z-index: 999 !important;
   }
   
   .react-images__header{
@@ -160,6 +198,7 @@ export default createGlobalStyle`
       }
     }
   }
+
   @media(min-width: 767px){
     .ReactModal__Content{
       width: 50%;
@@ -168,9 +207,9 @@ export default createGlobalStyle`
       height: 500px !important;
     }
   }
-  @media(max-width: 767px){
+  @media(max-width: 768px){
     .span-2{
-      grid-column: inherit;
+      grid-column: span 1;
     }
     .span-2 .gatsby-image-wrapper{
       height: 200px !important;
@@ -188,6 +227,18 @@ export default createGlobalStyle`
     }
     .react_video_player{
       min-height: inherit !important;
+    }
+    .react-images__dialog{
+      height: 100%;
+    }
+    .react-images__track, .react-images__frame{
+      height: 100% !important;
+    }
+    .react-images__view-wrapper{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
   }
 `

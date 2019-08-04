@@ -52,7 +52,7 @@ const SidebarContent = styled.div`
   ${props => props.theme.mq({ until: "md" })`
     padding-right: 0;
   `}
-  ${props => props.theme.mq({ until: "sm" })`
+  ${props => props.theme.mq({ until: "md" })`
     display: none;
   `}
 `

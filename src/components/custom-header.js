@@ -94,14 +94,7 @@ const Header = props => {
           <NavigationItem
             isActive={activeNav.work}
             onClick={() => {
-              if (window) {
-                activeNav.home
-                  ? window.scrollTo({
-                      top: 700,
-                      behavior: "smooth",
-                    })
-                  : navigate("/#work")
-              }
+              navigate("/#work")
             }}
           >
             <a title="work">Work</a>

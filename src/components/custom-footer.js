@@ -58,7 +58,7 @@ const CustomFooter = () => {
         <Socials>
           <Icon>
             <a href="mailto:hello@tinatjahyono.com">
-              <MailIcon />
+              <MailIcon style={{marginTop: "3.7px"}} />
             </a>
           </Icon>
           <Icon>

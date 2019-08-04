@@ -7,12 +7,14 @@ import Footer from "../components/footer"
 
 const Root = styled.div`
   background: ${props => props.theme.colors.yellow};
-  height: 82.5vh;
   display: flex;
   align-items: center;
-  ${props => props.theme.mq({ until: "sm" })`
-    height: 79.5vh;
-  `}
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  height: 100%;
 `
 
 const Heading = styled.h1`
@@ -20,32 +22,43 @@ const Heading = styled.h1`
   margin-bottom: 3px;
   text-align: center;
   font-weight: bold;
-  font-size: 100px;
+  font-size: 90px;
   font-family: "Bitter", sans-serif;
+
   ${props => props.theme.mq({ until: "sm" })`
     font-size: 80px;
   `}
+  @media(max-width: 350px) {
+    font-size: 64px;
+  }
 `
 
 const SubHeading = styled.h3`
-  font-size: 30px;
+  font-size: 27px;
   font-weight: normal;
   text-align: center;
   margin-bottom: 19px;
   ${props => props.theme.mq({ until: "sm" })`
     font-size: 24px;
   `}
+  @media(max-width: 350px) {
+    font-size: 19.2px;
+  }
 `
 
 const Text = styled.p`
-  font-size: 24px;
+  font-size: 22px;
+  line-height: 32px;
   font-weight: normal;
   font-family: "Playfair Display", sans-serif;
   text-align: center;
-  margin-bottom: 44px;
+  margin-bottom: 37px;
   ${props => props.theme.mq({ until: "sm" })`
     font-size: 19.2px;
   `}
+  @media(max-width: 350px) {
+    font-size: 15.36px;
+  }
 `
 
 const Form = styled.form`
@@ -143,6 +156,23 @@ const Error = styled.p`
   margin-bottom: 10px;
 `
 
+const FooterRoot = styled.div`
+  background: #ffe884;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`
+
+const ContentWrapper = styled.div`
+  margin-top: -90px;
+
+  @media (min-width: 300px) and (max-width: 360px) {
+    margin-top: -35px;
+  }
+`
+
 const encode = data => {
   return Object.keys(data)
     .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
@@ -234,7 +264,7 @@ const Contact = () => {
       <Root isFormDisplayed={displayForm}>
         <SEO title="Contact" />
         <Container>
-          <div style={{ marginTop: "-90px" }}>
+          <ContentWrapper>
             <Heading>hello.</Heading>
             <SubHeading>Let's work together.</SubHeading>
             <Text>
@@ -307,12 +337,12 @@ const Contact = () => {
                 />
               </Form>
             )}
-          </div>
+          </ContentWrapper>
         </Container>
       </Root>
-      <div style={{ background: "#ffe884" }}>
+      <FooterRoot>
         <Footer style={{ background: "#ffe884" }} />
-      </div>
+      </FooterRoot>
     </Layout>
   )
 }
