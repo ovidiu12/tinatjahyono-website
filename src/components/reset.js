@@ -198,6 +198,9 @@ export default createGlobalStyle`
       }
     }
   }
+  .ReactModal__Content{
+    border: none !important;
+  }
 
   @media(min-width: 767px){
     .ReactModal__Content{

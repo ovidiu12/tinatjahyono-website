@@ -163,14 +163,21 @@ const FooterRoot = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+
+  svg {
+    padding-top: 1px;
+  }
 `
 
 const ContentWrapper = styled.div`
   margin-top: -90px;
 
   @media (min-width: 300px) and (max-width: 360px) {
-    margin-top: -35px;
+    margin-top: 0;
   }
+  ${props => props.theme.mq({ until: "sm" })`
+    margin-top: 0;
+  `}
 `
 
 const encode = data => {

@@ -55,9 +55,6 @@ const IndexPage = () => {
                 img_description {
                   html
                 }
-                web_link {
-                  url
-                }
                 image {
                   localFile {
                     childImageSharp {

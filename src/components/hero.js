@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Container } from "../components/grid"
 import DownArrow from "../images/down-arrow.png"
+import { navigate } from "gatsby";
 
 const Root = styled.div`
   height: 90vh;
@@ -60,7 +61,7 @@ const Hero = () => {
           <SubHeading>Graphic Designer</SubHeading>
         </TextWrapper>
         <ArrowWrapper
-          onClick={() => window.scrollTo({ top: 700, behavior: "smooth" })}
+          onClick={() => navigate("#work")}
         >
           <img src={DownArrow} alt="Down arrow" />
         </ArrowWrapper>

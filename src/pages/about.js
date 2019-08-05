@@ -139,7 +139,9 @@ const Text = styled.div`
   font-size: 20px;
   margin-bottom: 80px;
   line-height: 32px;
-
+  a {
+    font-family: "Bitter", sans-serif;
+  }
   ${props => props.theme.mq({ until: "lg" })`
     max-width: 100%;
   `}

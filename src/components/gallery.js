@@ -83,6 +83,9 @@ const CarouselCaption = styled.p`
   color: ${props => props.theme.colors.mediumGray};
   line-height: 22px;
   font-size: 14px;
+  a {
+    color: ${props => props.theme.colors.mediumGray};
+  }
 `
 
 const CarouselCaptionWrapper = styled.div`
@@ -130,7 +133,7 @@ const FooterCaption = props => {
         <CarouselCaption
           dangerouslySetInnerHTML={{ __html: props.currentView.caption.html }}
         />
-        {props.currentView.link !== null && (
+        {props.currentView.link !== undefined && (
           <div>
             <a
               style={{ color: "#6d6e71", fontSize: "14px" }}
@@ -176,6 +179,11 @@ const ViewImgWrapper = styled.div`
   ${props => props.theme.mq({ from: "sm", until: "md" })`
     margin-top: 7.3%;
   `}
+
+  @media(max-height: 800px){
+    max-height: 550px;
+    overflow: hidden;
+  }
 `
 
 const customStyles = {
