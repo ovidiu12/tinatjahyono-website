@@ -285,7 +285,7 @@ const Contact = () => {
               </GetInTouch>
               <DownloadResume>
                 <a
-                  href="https://prismic-io.s3.amazonaws.com/ovidiu12%2Fc3ed3d58-6ab4-4e2d-a0ac-947fd77dd646_ttjahyono_resume_2019.pdf"
+                  href="https://prismic-io.s3.amazonaws.com/tina-tjahyono-portfolio%2F6de25974-1565-410b-832f-eba5b847660a_ttjahyono_resume_2019.pdf"
                   download
                 >
                   +Download Resume

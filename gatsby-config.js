@@ -34,7 +34,7 @@ module.exports = {
     {
       resolve: `gatsby-source-prismic`,
       options: {
-        repositoryName: `ovidiu12.cdn`,
+        repositoryName: `tina-tjahyono-portfolio.cdn`,
         accessToken: `${process.env.API_KEY}`,
         linkResolver: ({ node, key, value }) => post => `/${post.uid}`,
       },
