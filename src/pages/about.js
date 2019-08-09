@@ -150,8 +150,8 @@ const Text = styled.div`
 const About = () => {
   const data = useStaticQuery(graphql`
     query AboutQuery {
-      prismicGeneral {
-        data {
+      prismicGeneralBodyAbout {
+        primary {
           about_section_title
           about_image {
             localFile {
@@ -166,6 +166,9 @@ const About = () => {
             html
             text
           }
+          resume_about
+          about_email_text
+          about_email
         }
       }
     }
@@ -178,12 +181,16 @@ const About = () => {
           <Sidebar>
             <SidebarContent>
               <Contact>
-                <Label>Email</Label>
+                <Label>
+                  {data.prismicGeneralBodyAbout.primary.about_email_text}
+                </Label>
                 <a
                   style={{ textDecoration: "none" }}
-                  href="mailto:hello@tinatjahyono.com"
+                  href={`mailto:${data.prismicGeneralBodyAbout.primary.about_email}`}
                 >
-                  <Email>hello@tinatjahyono.com</Email>
+                  <Email>
+                    {data.prismicGeneralBodyAbout.primary.about_email}
+                  </Email>
                 </a>
               </Contact>
               <Resume>
@@ -191,25 +198,27 @@ const About = () => {
                   href="https://prismic-io.s3.amazonaws.com/ovidiu12%2Fc3ed3d58-6ab4-4e2d-a0ac-947fd77dd646_ttjahyono_resume_2019.pdf"
                   download
                 >
-                  Resume
+                  {data.prismicGeneralBodyAbout.primary.resume_about}
                 </a>
               </Resume>
             </SidebarContent>
           </Sidebar>
           <Content>
             <CustomHeader style={{ marginRight: "-25px" }} bgColor="white" />
-            <Heading>About</Heading>
+            <Heading>
+              {data.prismicGeneralBodyAbout.primary.about_section_title}
+            </Heading>
             <ImgWrapper>
               <Img
                 fluid={
-                  data.prismicGeneral.data.about_image.localFile.childImageSharp
-                    .fluid
+                  data.prismicGeneralBodyAbout.primary.about_image.localFile
+                    .childImageSharp.fluid
                 }
               />
             </ImgWrapper>
             <Text
               dangerouslySetInnerHTML={{
-                __html: data.prismicGeneral.data.about_text.html,
+                __html: data.prismicGeneralBodyAbout.primary.about_text.html,
               }}
             />
             <CustomFooter />

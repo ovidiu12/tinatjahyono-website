@@ -24,11 +24,20 @@ const Heading = styled.h1`
   text-align: center;
   font-size: 32px;
   font-weight: bold;
+  text-transform: uppercase;
 `
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
     query PhotosQuery {
+      prismicGeneral {
+        data {
+          home_heading
+          home_subheading
+          linkedin_link
+          work_title
+        }
+      }
       allPrismicProject(sort: { fields: [data___order], order: ASC }) {
         edges {
           node {
@@ -78,11 +87,14 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <Hero />
+      <Hero
+        heading={data.prismicGeneral.data.home_heading}
+        subheading={data.prismicGeneral.data.home_subheading}
+      />
       <Separator id="work" />
       <Container>
         <div>
-          <Heading>WORK</Heading>
+          <Heading>{data.prismicGeneral.data.work_title}</Heading>
         </div>
       </Container>
       <Gallery

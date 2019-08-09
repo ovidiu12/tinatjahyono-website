@@ -1,4 +1,5 @@
 import React from "react"
+import { useStaticQuery } from "gatsby"
 import styled from "styled-components"
 import { Container } from "./grid"
 import LinkedInIcon from "../svgs/linkedin-icon.svg"
@@ -54,11 +55,21 @@ const Icon = styled.div`
 `
 
 const Footer = ({ style }) => {
+  const data = useStaticQuery(graphql`
+    query FooterQuery {
+      prismicGeneral {
+        data {
+          linkedin_link
+          copyright
+        }
+      }
+    }
+  `)
   return (
     <Container>
       <Root style={{ ...style }}>
         <ContentWrapper>
-          <Copyright>© 2019 Tina Tjahyono</Copyright>
+          <Copyright>{data.prismicGeneral.data.copyright}</Copyright>
           <Socials>
             <Icon>
               <a href="mailto:hello@tinatjahyono.com">
@@ -66,7 +77,7 @@ const Footer = ({ style }) => {
               </a>
             </Icon>
             <Icon>
-              <a href="https://www.linkedin.com/in/ttjahyono/">
+              <a href={data.prismicGeneral.data.linkedin_link}>
                 <LinkedInIcon />
               </a>
             </Icon>

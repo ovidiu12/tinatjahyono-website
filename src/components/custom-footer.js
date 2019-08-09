@@ -1,6 +1,6 @@
 import React from "react"
+import { useStaticQuery } from "gatsby"
 import styled from "styled-components"
-import { Container } from "./grid"
 import LinkedInIcon from "../svgs/linkedin-icon.svg"
 import MailIcon from "../svgs/mail-icon.svg"
 
@@ -51,18 +51,28 @@ const Icon = styled.div`
 `
 
 const CustomFooter = () => {
+  const data = useStaticQuery(graphql`
+    query CustomFooterQuery {
+      prismicGeneral {
+        data {
+          linkedin_link
+          copyright
+        }
+      }
+    }
+  `)
   return (
     <Root>
       <ContentWrapper>
-        <Copyright>© 2019 Tina Tjahyono</Copyright>
+        <Copyright>{data.prismicGeneral.data.copyright}</Copyright>
         <Socials>
           <Icon>
             <a href="mailto:hello@tinatjahyono.com">
-              <MailIcon style={{marginTop: "3.7px"}} />
+              <MailIcon style={{ marginTop: "3.7px" }} />
             </a>
           </Icon>
           <Icon>
-            <a href="https://www.linkedin.com/in/ttjahyono/">
+            <a href={data.prismicGeneral.data.linkedin_link}>
               <LinkedInIcon />
             </a>
           </Icon>

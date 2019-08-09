@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Container } from "../components/grid"
 import DownArrow from "../images/down-arrow.png"
-import { navigate } from "gatsby";
+import { navigate } from "gatsby"
 
 const Root = styled.div`
   height: 90vh;
@@ -52,17 +52,15 @@ const ArrowWrapper = styled.div`
   cursor: pointer;
 `
 
-const Hero = () => {
+const Hero = props => {
   return (
     <Root>
       <Container>
         <TextWrapper>
-          <Heading>Tina Tjahyono</Heading>
-          <SubHeading>Graphic Designer</SubHeading>
+          <Heading>{props.heading}</Heading>
+          <SubHeading>{props.subheading}</SubHeading>
         </TextWrapper>
-        <ArrowWrapper
-          onClick={() => navigate("#work")}
-        >
+        <ArrowWrapper onClick={() => navigate("#work")}>
           <img src={DownArrow} alt="Down arrow" />
         </ArrowWrapper>
       </Container>
