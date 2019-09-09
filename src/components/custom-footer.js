@@ -67,7 +67,7 @@ const CustomFooter = () => {
         <Copyright>{data.prismicGeneral.data.copyright}</Copyright>
         <Socials>
           <Icon>
-            <a href="mailto:hello@tinatjahyono.com">
+            <a href="mailto:tst170@gmail.com">
               <MailIcon style={{ marginTop: "3.7px" }} />
             </a>
           </Icon>
