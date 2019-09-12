@@ -157,6 +157,18 @@ const ContentWrapper = styled.div`
 const Contact = () => {
   const data = useStaticQuery(graphql`
     query ContactQuery {
+      allPrismicGeneral {
+        nodes {
+          data {
+            resume_url
+          }
+        }
+      }
+      prismicGeneralBodyAbout {
+        primary {
+          about_email
+        }
+      }
       prismicGeneralBodyContact {
         primary {
           main_title
@@ -189,13 +201,15 @@ const Contact = () => {
             ></Text>
             <ButtonsWrapper>
               <GetInTouch>
-                <a href="mailto:hello@tinatjahyono.com">
+                <a
+                  href={`mailto:${data.prismicGeneralBodyAbout.primary.about_email}`}
+                >
                   {data.prismicGeneralBodyContact.primary.get_in_touch_button}
                 </a>
               </GetInTouch>
               <DownloadResume>
                 <a
-                  href="https://prismic-io.s3.amazonaws.com/tina-tjahyono-portfolio%2F6de25974-1565-410b-832f-eba5b847660a_ttjahyono_resume_2019.pdf"
+                  href={`${data.allPrismicGeneral.nodes[0].data.resume_url}`}
                   download
                 >
                   {data.prismicGeneralBodyContact.primary.download_resume}

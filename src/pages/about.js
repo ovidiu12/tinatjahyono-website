@@ -150,6 +150,13 @@ const Text = styled.div`
 const About = () => {
   const data = useStaticQuery(graphql`
     query AboutQuery {
+      allPrismicGeneral {
+        nodes {
+          data {
+            resume_url
+          }
+        }
+      }
       prismicGeneralBodyAbout {
         primary {
           about_section_title
@@ -195,7 +202,7 @@ const About = () => {
               </Contact>
               <Resume>
                 <a
-                  href="https://prismic-io.s3.amazonaws.com/ovidiu12%2Fc3ed3d58-6ab4-4e2d-a0ac-947fd77dd646_ttjahyono_resume_2019.pdf"
+                  href={`${data.allPrismicGeneral.nodes[0].data.resume_url}`}
                   download
                 >
                   {data.prismicGeneralBodyAbout.primary.resume_about}
